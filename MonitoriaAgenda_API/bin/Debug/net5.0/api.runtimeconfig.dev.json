@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\terad\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\terad\\.nuget\\packages"
+    ]
+  }
+}
