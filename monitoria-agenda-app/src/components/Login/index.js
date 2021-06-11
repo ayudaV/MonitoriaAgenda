@@ -5,7 +5,6 @@ import { faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-sol
 import { connect } from 'react-redux';
 import Account from '../Account';
 import Logo from '../../assets/images/monitoriaAgenda.png';
-import '../../App.scss';
 
 function toggleAcount(account) {
     return {

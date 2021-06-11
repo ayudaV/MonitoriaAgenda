@@ -45,3 +45,61 @@ h1 {
   display: flex;
   flex-direction: column;
 }
+.container-horariosAll {
+  margin: auto;
+  color: whitesmoke;
+  text-align: center;
+  background-color: #414141;
+  width: 750px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 400px;
+  border-radius: 10px;
+}
+
+.container-horario {
+  fill-opacity:0;
+  stroke: #6cd5f5;
+  stroke-width: 1px;
+  rx:2px
+}
+.texto-horario {
+  fill: #6cd5f5;
+  font-size:13px
+}
+.container-tabelaHorarios {
+  border-radius: 10px;
+  width: 60%;
+  background-color: #242424;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+}
+.title-horarios {
+  color: whitesmoke;
+  font-size: 40px;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #242424;
+}
+::-webkit-scrollbar-track:hover {
+  background: #363636;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(172, 172, 172);
+}

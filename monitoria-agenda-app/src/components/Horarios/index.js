@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../App.scss';
 
 class Horario extends Component {
 
@@ -37,9 +36,11 @@ class Horario extends Component {
                     this.setState({ error });
                 })
     }
+
     getValorInicio(a) {
         return ((Number(a.substring(11, 13) * 100) + Number(a.substring(14, 16)) * 1.666666) / 4)
     }
+
     getValorFinal(b) {
         return ((Number(b.substring(11, 13) * 100) + Number(b.substring(14, 16)) * 1.666666) / 4)
     }
@@ -49,16 +50,14 @@ class Horario extends Component {
             <svg width="100" height="600">
                 {this.state.dadosHorarios.map((Horario) =>
                     <g key={Horario.idHorario}>
-                        <rect
-                            fill="#ffffff"
-                            x="0"
+                        <rect  className="container-horario"
+                            x="2"
                             y={this.getValorInicio(Horario.horaInicio)}
                             height={this.getValorFinal(Horario.horaFim) - this.getValorInicio(Horario.horaInicio)}
-                            width="100px"
-                            id={"ID:" + Horario.idHorario}
-                            stroke="#000" />
-                        <text x="0" y={this.getValorFinal(Horario.horaFim) - 5} width="100">
-                            {Horario.horaInicio.substring(11, 16)}
+                            width="96px"
+                            id={"ID:" + Horario.idHorario}/>
+                        <text className="texto-horario" x="4" y={this.getValorFinal(Horario.horaFim) - 5} width="100">
+                            {Horario.horaInicio.substring(11, 16)} - {Horario.horaFim.substring(11, 16)}
                         </text>
                     </g>
                 )}

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle, faUser } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
 import Account from '../Account';
-import '../../App.scss';
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
 const Cadastro = ({saldoDeMonitoria, role}) => {
