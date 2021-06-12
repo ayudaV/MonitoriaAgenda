@@ -6,11 +6,13 @@ import {connect} from 'react-redux';
 import Account from '../Account';
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
+
 const Cadastro = ({saldoDeMonitoria, role}) => {
     const [email, setUsuario] = useState("");
     const [apelido, setApelido] = useState("");
     const [senha, setPassword] = useState("");
     const [erro, setErro] = useState('');
+    const cadastrado = false;
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -29,13 +31,7 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
                 resp => {
                     console.log(JSON.stringify(userForm))
                     if (resp.ok) {
-                        return <Redirect to = "/login"/>
-                        /*
-                        console.log(resp.json());
-                        resp.json().then((data) => {
-                            console.log(data);
-                        })
-                        */
+                        return cadastrado = true;
                     }
                     else {
                         console.log('E-mail já cadastrado ou servidor off-line.');
@@ -66,7 +62,7 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
             <input className="botao" type="submit" value="Cadastrar" />
             <br />
             {
-                erro ?
+                cadastrado ?
                     <div>
                         <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
                         <div className="erro">
@@ -74,7 +70,6 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
                         </div>
                     </div> :
                     <h4 className="msgErro">{erro}</h4>}
-            <Account/>
         </form>
         </div>
     )

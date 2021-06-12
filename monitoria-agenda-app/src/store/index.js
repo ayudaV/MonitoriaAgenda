@@ -3,11 +3,11 @@ import { createStore } from 'redux';
 const INITIAL_STATE = {
     token: localStorage.userJWT, 
     user: {
-        email:  localStorage.user.email,
-        apelido:  localStorage.user.apelido,
-        saldoDeMonitoria: localStorage.user.saldoDeMonitoria,
-        role:  localStorage.user.role,
-        senha:  localStorage.user.senha,
+        email:  "anonymous@g.unicamp.br",
+        apelido:  "Any",
+        saldoDeMonitoria: 500,
+        role:  "Aluno",
+        senha:  "unicamp",
     }
 }
 
