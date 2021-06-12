@@ -41,7 +41,7 @@ namespace api.Controllers
         }
     
         [HttpGet("day/{DiaSemana}")]
-        public async Task<IActionResult> GetAllByDia(int diaSemana) {
+        public async Task<IActionResult> GetAllAgendamentoByDia(int diaSemana) {
                 try {
                 var result = await repository.GetAgendamentoByKeyAsync(diaSemana);
                 if (result == null)
@@ -55,7 +55,7 @@ namespace api.Controllers
         }
 
         [HttpGet("monitor/{IdMonitor}")]
-        public async Task<IActionResult> GetAllByMonitor(int idMonitor) {
+        public async Task<IActionResult> GetAllAgendamentoByMonitor(int idMonitor) {
                 try {
                 var result = await repository.GetAgendamentoByMonitorAsync(idMonitor);
                 if (result == null)
@@ -68,10 +68,10 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("dayAgendamento/{DiaSemana}/{IdMonitor}")]
-        public async Task<IActionResult> GetAllByAgendamentoDia(int diaSemana, int idMonitor) {
+        [HttpGet("dayMonitor/{DiaSemana}/{IdMonitor}")]
+        public async Task<IActionResult> GetAllAgendamentoByDiaMonitor(int diaSemana, int idMonitor) {
                 try {
-                var result = await repository.GetHorarioByDayMonitorAsync(diaSemana, idMonitor);
+                var result = await repository.GetAgendamentoByDayMonitorAsync(diaSemana, idMonitor);
                 if (result == null)
                     return this.StatusCode(StatusCodes.Status404NotFound);
                     

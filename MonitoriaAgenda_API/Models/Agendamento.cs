@@ -11,7 +11,7 @@ namespace api.Models
         public int IdMonitor {get;set;}
         public int DiaDaSemana { get; set; }
         public DateTime HoraInicio { get; set; }
-        public int Duracao { get; set; }    
+        public DateTime HoraFim { get; set; }
         public int Preco {get; set;}
     }
 }

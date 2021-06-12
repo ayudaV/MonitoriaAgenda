@@ -28,7 +28,7 @@ namespace api.Data
         public void Update<T>(T entity) where T : class {
             this.context.Update(entity);
         }
-
+        //Aluno
         public async Task<Aluno[]> GetAllAlunosAsync() {
             IQueryable<Aluno> consultaAlunos = this.context.Aluno;
             consultaAlunos = consultaAlunos.OrderBy(a => a.Apelido);
@@ -40,6 +40,7 @@ namespace api.Data
             return await consultaAlunos.FirstOrDefaultAsync();
         }
 
+        //Agendamento
         public async Task<Agendamento[]> GetAllAgendamentosAsync() {
             IQueryable<Agendamento> consultaAgendamentos = this.context.Agendamento;
             consultaAgendamentos = consultaAgendamentos.OrderBy(a => a.IdAgendamento);
@@ -66,6 +67,7 @@ namespace api.Data
             return await consultaAgendamentos.ToArrayAsync();
         }
     
+        //Monitor
         public async Task<Monitor[]> GetAllMonitoresAsync() {
             IQueryable<Monitor> consultaMonitores = this.context.Monitor;
             consultaMonitores = consultaMonitores.OrderBy(a => a.IdMonitor);
@@ -82,6 +84,7 @@ namespace api.Data
             return await consultaMonitores.FirstOrDefaultAsync();
         }
         
+        //Horario
         public async Task<Horario[]> GetAllHorariosAsync() {
             IQueryable<Horario> consultaHorarios = this.context.Horario;
             consultaHorarios = consultaHorarios.OrderBy(a => a.DiaDaSemana);
