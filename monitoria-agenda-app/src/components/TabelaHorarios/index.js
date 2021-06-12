@@ -28,6 +28,7 @@ export default class TabelaHorarios extends Component {
         };
 
     }
+    
     atualizaCampo(event) {
         //clonar usuário a partir do state, para não alterar o state diretamente
         const monitor = { ...this.state.monitor };
