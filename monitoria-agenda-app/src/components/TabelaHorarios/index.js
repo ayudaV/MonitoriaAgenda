@@ -10,17 +10,9 @@ export default class TabelaHorarios extends Component {
         super(props)
 
         const stateInicial = {
-            monitor: { idMonitor: 0, email: '', nomeMonitor: '' },
+            monitor: { idMonitor: 1, email: '', nomeMonitor: '' },
             dadosMonitores: [],
-            horarios: {
-                hr1: <Horarios diaSemana={1} idMonitor={0} />,
-                hr2: <Horarios diaSemana={2} idMonitor={0} />,
-                hr3: <Horarios diaSemana={3} idMonitor={0} />,
-                hr4: <Horarios diaSemana={4} idMonitor={0} />,
-                hr5: <Horarios diaSemana={5} idMonitor={0} />,
-                hr6: <Horarios diaSemana={6} idMonitor={0} />,
-                hr7: <Horarios diaSemana={7} idMonitor={0} />
-            }
+            horarios: { }
         }
 
         this.state = {
@@ -86,15 +78,24 @@ export default class TabelaHorarios extends Component {
     renderTable() {
         return (<div className="container-tabelaHorarios">
             <h1 className="title-horarios">Horarios</h1>
-            <div className="monitor-select">
-                <select required onChange={e => this.atualizaCampo(e)}>
-                    {this.state.dadosMonitores.map(
-                        (monitor) =>
-                            <option key={monitor.idMonitor} value={monitor.idMonitor}>{monitor.nomeMonitor}</option>
-                    )}
-                </select>
-                <button onClick={e => this.atualizaHorario(e)}>Carrregar</button>
-            </div>
+            <table className="monitor-select">
+                <tbody>
+                    <tr>
+                        <td>
+                            <select required onChange={e => this.atualizaCampo(e)}>
+                                {this.state.dadosMonitores.map(
+                                    (monitor) =>
+                                        <option key={monitor.idMonitor} value={monitor.idMonitor}>{monitor.nomeMonitor}</option>
+                                )}
+                            </select>
+                        </td>
+                        <td>
+                            <button onClick={e => this.atualizaHorario(e)}>Carrregar</button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div className="container-horariosAll">
                 <>
                     {this.state.horarios.hr1}
@@ -112,7 +113,7 @@ export default class TabelaHorarios extends Component {
     render() {
         return (
             <>
-                <Header/>
+                <Header />
                 {this.renderTable()}
             </>
         )

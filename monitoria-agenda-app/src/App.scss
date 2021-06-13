@@ -109,7 +109,28 @@ h1 {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(172, 172, 172);
 }
+.monitor-select {
+  margin: auto;
 
+}
+.monitor-select *{
+  font-family: Arial;
+  border-radius: 3px;
+  margin: 10px;
+  padding: 5px;
+  border: none;
+  color: whitesmoke;
+}
+
+.monitor-select select {
+  width: 180px;
+  background-color: #333;
+  margin-right: 0;
+}
+.monitor-select button {
+  background-color: #414141;
+  width: 130px;
+}
 nav {
   list-style-type: none;
   margin: 0;
@@ -160,18 +181,3 @@ li a:hover {
 
 */
 /* The container must be positioned relative: */
-.monitor-select {
-  font-family: Arial;
-  margin: auto;
-  width: 200px;
-}
-
-.monitor-select select {
-  width: 180px;
-  background-color: #333;
-  border: none;
-  padding: 5px;
-  color: whitesmoke;
-  margin: 10px;
-  border-radius: 3px;
-}
