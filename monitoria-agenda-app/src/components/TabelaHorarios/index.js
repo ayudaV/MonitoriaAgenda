@@ -12,7 +12,7 @@ export default class TabelaHorarios extends Component {
         const stateInicial = {
             monitor: { idMonitor: 1, email: '', nomeMonitor: '' },
             dadosMonitores: [],
-            horarios: { }
+            horarios: {}
         }
 
         this.state = {
@@ -62,7 +62,8 @@ export default class TabelaHorarios extends Component {
                     this.setState({
                         dadosMonitores: result
                     });
-                    console.log("Função didMount:" + result);
+                    console.log("Função didMount monitor:")
+                    console.log(result);
                 },
                 (error) => {
                     this.setState({ error });
@@ -97,14 +98,19 @@ export default class TabelaHorarios extends Component {
                 </tbody>
             </table>
             <div className="container-horariosAll">
-                <>
-                    {this.state.horarios.hr1}
-                    {this.state.horarios.hr2}
-                    {this.state.horarios.hr3}
-                    {this.state.horarios.hr4}
-                    {this.state.horarios.hr5}
-                    {this.state.horarios.hr6}
-                    {this.state.horarios.hr7}</>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>{this.state.horarios.hr1}</td>
+                            <td>{this.state.horarios.hr2}</td>
+                            <td>{this.state.horarios.hr3}</td>
+                            <td>{this.state.horarios.hr4}</td>
+                            <td>{this.state.horarios.hr5}</td>
+                            <td>{this.state.horarios.hr6}</td>
+                            <td>{this.state.horarios.hr7}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>)
 

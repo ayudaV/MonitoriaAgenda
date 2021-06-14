@@ -22,6 +22,6 @@ const Header = ({ apelido, saldoDeMonitoria }) => (
     </nav>
 )
 export default connect(state => ({
-    apelido: state.user.apelido,
-    saldoDeMonitoria: state.user.saldoDeMonitoria,
+    apelido: state.login.user.apelido,
+    saldoDeMonitoria: state.login.user.saldoDeMonitoria,
 }))(Header);

@@ -3,7 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle, faUser } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
-import Account from '../Account';
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
 

@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import Account from '../Account';
+
+import { connect } from 'react-redux'
+import * as LoginActions from '../../store/actions/login'
+
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
-function toggleAcount(account) {
-    return {
-        type: 'LOGIN',
-        account
-    }
-}
-
-const Login = ({ account, dispatch }) => {
+const Login = ({ usuario, dispatch }) => {
     const [email, setUsuario] = useState("");
     const [senha, setPassword] = useState("");
     const [user, setUser] = useState();
@@ -47,14 +43,9 @@ const Login = ({ account, dispatch }) => {
                     if (resp.ok) {
                         //console.log(resp.json());
                         resp.json().then((data) => {
-                            console.log(data);
-                            // set the state of the user
+                            console.log('data.user.email: ' + data.user.email);
                             setUser(data);
-                            // store the user in localStorage
-                            localStorage.setItem('data', data);
-                            //console.log(data)
-
-                            (() => dispatch(toggleAcount({ data: data })))()
+                            dispatch(LoginActions.setLogin(data.user))
                         })
                     }
                     else {
@@ -67,14 +58,14 @@ const Login = ({ account, dispatch }) => {
             })
     }
     return (
-        user ? <Redirect to="/horarios" />
-        : <div className="container-login">
+        user ? <Redirect to="/horarios" />:
+         <div className="container-login">
             <img className="logo" src={Logo} alt="Logo Monitoria Agenda" />
             <form onSubmit={handleSubmit}>
                 <h1>Login</h1>
                 <div className="textbox">
                     <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                    <input type="email" value={email} onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                    <input type="email" value={email}  onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
                 </div>
                 <div className="textbox">
                     <FontAwesomeIcon icon={faLock} className="icon" />
@@ -97,9 +88,10 @@ const Login = ({ account, dispatch }) => {
                         <h4 className="msgErro">{erro}</h4>
                 }
             </form>
+            <strong>{usuario.email}</strong>
+            <strong>{usuario.password}</strong>
         </div>
     )
 
 };
-
-export default connect(state => ({ user: state.user }))(Login);
+export default connect(state => ({ usuario: state.login.user }))(Login);

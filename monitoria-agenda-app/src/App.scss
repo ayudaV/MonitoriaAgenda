@@ -55,12 +55,15 @@ h1 {
   height: 350px;
   border-radius: 10px;
 }
-
+/*
 .container-horario {
   fill-opacity: 0;
   stroke: #6cd5f5;
   stroke-width: 1px;
   rx: 2px;
+}
+.container-horario:hover {
+  cursor: pointer;
 }
 .texto-horario {
   fill: #6cd5f5;
@@ -71,8 +74,32 @@ h1 {
   stroke-width: 1px;
   rx: 2px;
   fill: rgb(139, 15, 15);
+}*/
+.colunaHorarios {
+  height: 600px;
+  width: 100px;
+  position: relative;
+  text-align: left;
 }
-
+.btnHorario {
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid #6cd5f5;
+  border-radius: 3px;
+  color: whitesmoke;
+  position: absolute;
+  width:100px
+}
+.agendamento {
+  background-color: rgb(196, 48, 48);
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  color: whitesmoke;
+  position: absolute;
+  width:100px
+}
+.btnHorario:hover {
+ cursor: pointer;
+}
 .container-tabelaHorarios {
   border-radius: 10px;
   width: 60%;
@@ -168,16 +195,6 @@ li a:hover {
   text-align: right;
   padding: 7px;
 }
-/*
-.monitor-select {
-  width: 180px;
-  background-color: #333;
-  border: none;
-  padding: 5px;
-  color: whitesmoke;
-  margin: 10px;
-  border-radius: 3px;
+svg {
+  pointer-events: none;
 }
-
-*/
-/* The container must be positioned relative: */
