@@ -43,7 +43,7 @@ namespace api.Controllers
         [HttpGet("day/{DiaSemana}")]
         public async Task<IActionResult> GetAllAgendamentoByDia(int diaSemana) {
                 try {
-                var result = await repository.GetAgendamentoByKeyAsync(diaSemana);
+                var result = await repository.GetAgendamentoByDayAsync(diaSemana);
                 if (result == null)
                     return this.StatusCode(StatusCodes.Status404NotFound);
                     
@@ -58,6 +58,20 @@ namespace api.Controllers
         public async Task<IActionResult> GetAllAgendamentoByMonitor(int idMonitor) {
                 try {
                 var result = await repository.GetAgendamentoByMonitorAsync(idMonitor);
+                if (result == null)
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                    
+                return Ok(result);
+            }
+            catch {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
+            }
+        }
+
+        [HttpGet("horario/{IdHorario}")]
+        public async Task<IActionResult> GetAllAgendamentoByHorario(int idHorario) {
+                try {
+                var result = await repository.GetAgendamentoByHorarioAsync(idHorario);
                 if (result == null)
                     return this.StatusCode(StatusCodes.Status404NotFound);
                     

@@ -42,16 +42,12 @@ const Horario = (props) => {
             )
     }, [])
 
-    //const getValorInicio = str => ((Number(str.substring(11, 13) * 100) + Number(str.substring(14, 16)) * 1.666666) / 4)
-
-    //const getValorFinal = str => ((Number(str.substring(11, 13) * 100) + Number(str.substring(14, 16)) * 1.666666) / 4)
-
-
     function handleClick(e, Horario) {
         e.preventDefault();
         console.log('Horario Clicado.');
         dispatch(HorarioActions.setHorario(Horario))
     }
+
     return (
         <div className="colunaHorarios" >
             {dadosHorarios.map((Horario) =>
@@ -64,14 +60,14 @@ const Horario = (props) => {
                 </button>
             )}
             {dadosAgendamentos.map((Agendamento) =>
-                <button key={Agendamento.idAgendamento}
+                <button key={Agendamento.agendamento.idAgendamento}
                     disabled
                     className="agendamento"
                     style={{
-                        top: Number(DateTime.getValorInicio(Agendamento.horaInicio)) + 'px',
-                        height: Number(DateTime.getValorFinal(Agendamento.horaFim) - DateTime.getValorInicio(Agendamento.horaInicio)) + 'px'
+                        top: Number(DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) + 'px',
+                        height: Number(DateTime.getValorFinal(Agendamento.agendamento.horaFim) - DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) + 'px'
                     }}
-                    id={"ID:" + Agendamento.idAgendamento}>
+                    id={"ID:" + Agendamento.agendamento.idAgendamento}>
                 </button>
             )}
         </div>

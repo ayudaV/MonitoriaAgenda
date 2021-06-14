@@ -1,45 +1,44 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux'
+
 import Header from '../Header';
 import Horarios from '../Horarios'
+import Agendamento from '../Agendamento';
 
-const apiUrlMonitor = 'http://localhost:5000/monitor';
+import * as DateTime from '../../DateTimeController'
 
-export default class TabelaHorarios extends Component {
 
-    constructor(props) {
-        super(props)
+const TabelaHorarios = ({ horario, dispatch }) => {
 
-        const stateInicial = {
-            monitor: { idMonitor: 1, email: '', nomeMonitor: '' },
-            dadosMonitores: [],
-            horarios: {}
-        }
+    const [dadosMonitores, setMonitores] = useState([]);
+    const [monitor, setMonitor] = useState({ idMonitor: 1 });
+    const [horarios, setHorarios] = useState({});
 
-        this.state = {
-            ...stateInicial
-        };
-        this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-    }
-    atualizaCampo(event) {
-        //clonar usuário a partir do state, para não alterar o state diretamente
-        const monitor = { ...this.state.monitor };
+    useEffect(() => {
+        const apiUrlMonitor = 'http://localhost:5000/monitor';
+
+        fetch(apiUrlMonitor)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setMonitores(result);
+                    console.log("Função didMount monitor:")
+                    console.log(result);
+                },
+                (error) => {
+                    console.log({ error });
+                }
+            )
+    }, [])
+    const atualizaCampo = (e) => {
+        monitor.idMonitor = e.target.value;
+        setMonitor(monitor);
+        setHorarios({})
         console.log(monitor)
-        //usar o atributo NAME do input identificar o campo a ser atualizado
-        monitor.idMonitor = event.target.value;
-        //atualizar o state
-        this.setState({ monitor: monitor });
-        this.setState({
-            horarios:
-                {}
-        })
-
-        console.log(this.state)
     }
-    atualizaHorario(event) {
-        const monitor = { ...this.state.monitor };
-        console.log(monitor)
-        this.setState({
-            horarios:
+    const atualizaHorario = () => {
+        console.log('Atualizando Horarios')
+        setHorarios(
             {
                 hr1: <Horarios diaSemana={1} idMonitor={Number(monitor.idMonitor)} />,
                 hr2: <Horarios diaSemana={2} idMonitor={Number(monitor.idMonitor)} />,
@@ -48,77 +47,59 @@ export default class TabelaHorarios extends Component {
                 hr5: <Horarios diaSemana={5} idMonitor={Number(monitor.idMonitor)} />,
                 hr6: <Horarios diaSemana={6} idMonitor={Number(monitor.idMonitor)} />,
                 hr7: <Horarios diaSemana={7} idMonitor={Number(monitor.idMonitor)} />,
-            }
-        })
-    }
-    componentDidMount() {
-        fetch(apiUrlMonitor)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        dadosMonitores: result
-                    });
-                    console.log("Função didMount monitor:")
-                    console.log(result);
-                },
-                (error) => {
-                    this.setState({ error });
-                }
-            );
-        /*
-        const email = "";
-
-        const apiUrlAluno = 'http://localhost:5000/aluno/' + email;
-        console.log("link:" + apiUrlAluno)*/
+            })
     }
 
-    renderTable() {
-        return (<div className="container-tabelaHorarios">
-            <h1 className="title-horarios">Horarios</h1>
-            <table className="monitor-select">
-                <tbody>
-                    <tr>
-                        <td>
-                            <select required onChange={e => this.atualizaCampo(e)}>
-                                {this.state.dadosMonitores.map(
-                                    (monitor) =>
-                                        <option key={monitor.idMonitor} value={monitor.idMonitor}>{monitor.nomeMonitor}</option>
-                                )}
-                            </select>
-                        </td>
-                        <td>
-                            <button onClick={e => this.atualizaHorario(e)}>Carrregar</button>
 
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="container-horariosAll">
-                <table>
+    const renderTable = () => {
+        return (
+            <div className="container-tabelaHorarios">
+                <h1 className="title-horarios">Horarios</h1>
+                <table className="monitor-select">
                     <tbody>
                         <tr>
-                            <td>{this.state.horarios.hr1}</td>
-                            <td>{this.state.horarios.hr2}</td>
-                            <td>{this.state.horarios.hr3}</td>
-                            <td>{this.state.horarios.hr4}</td>
-                            <td>{this.state.horarios.hr5}</td>
-                            <td>{this.state.horarios.hr6}</td>
-                            <td>{this.state.horarios.hr7}</td>
+                            <td>
+                                <select required onChange={e => atualizaCampo(e)}>
+                                    {dadosMonitores.map(
+                                        (monitor) =>
+                                            <option key={monitor.idMonitor} value={monitor.idMonitor}>{monitor.nomeMonitor}</option>
+                                    )}
+                                </select>
+                            </td>
+                            <td>
+                                <button onClick={e => atualizaHorario(e)}>Carrregar</button>
+
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>)
-
+                <div className="container-horariosAll">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>{horarios.hr1}</td>
+                                <td>{horarios.hr2}</td>
+                                <td>{horarios.hr3}</td>
+                                <td>{horarios.hr4}</td>
+                                <td>{horarios.hr5}</td>
+                                <td>{horarios.hr6}</td>
+                                <td>{horarios.hr7}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>)
     }
 
-    render() {
-        return (
-            <>
-                <Header />
-                {this.renderTable()}
-            </>
-        )
-    }
+    return (
+        horario.idHorario !== 0 ? <>
+            <Agendamento />
+            <Header />
+        </> : <>
+            <Header />
+            {renderTable()}
+        </>
+
+    )
 }
+export default connect(state => ({ horario: state.horario.horario }))(TabelaHorarios);

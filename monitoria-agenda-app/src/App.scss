@@ -177,11 +177,7 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
+  &:hover {background-color: #111;}
 }
 .nav-logo {
   width: 70px;
@@ -200,10 +196,57 @@ li a:hover {
   font-size: 30px ;
 }
 
-.agen_background {
+.agen-background {
   position: absolute;
   x: 0;
   y: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(17, 17, 17, 0.5);
+  z-index: 2;
+}
+.container-agen {
+  width: 40%;
+  height: 60%;
+  background-color: #363636;
+  margin: auto;
+  border-radius: 10px;
+  color: whitesmoke;
+  margin-top: 10%;
+  padding: 20px;
+  z-index: 2;
+}
+.agendamento-box {
+  vertical-align: top;
+}
+.close {
+  text-align: right;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.icon-close {
+  font-size: 20px;
+}
+.tableAgendamento {
+  width: 100%;
+  height: 100px;
+  margin: auto;
+}
+.colunaAgendamentos {
+  height: 300px;
+  width: 200px;
+  position: relative;
+  text-align: left;
+  margin-top: 20px;
+}
+.horario-input {
+  width: 25px;
+  margin: 2px;
+
+  &.duracao {
+    width: 40px;
+    margin-right: 15px;
+  }
 }
