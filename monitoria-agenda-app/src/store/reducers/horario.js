@@ -7,7 +7,7 @@ const INITIAL_STATE = {
         idMonitor:0,
     },
 }
-export default function horario(state = INITIAL_STATE, action) {
+export default function setHorario(state = INITIAL_STATE, action) {
     console.log(action)
     if(action.type === 'SET_HORARIO') {
         return {
