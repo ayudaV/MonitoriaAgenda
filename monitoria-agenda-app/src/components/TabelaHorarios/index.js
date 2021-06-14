@@ -20,9 +20,6 @@ export default class TabelaHorarios extends Component {
         };
         this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     }
-    forceUpdateHandler() {
-        this.forceUpdate()
-    }
     atualizaCampo(event) {
         //clonar usuário a partir do state, para não alterar o state diretamente
         const monitor = { ...this.state.monitor };

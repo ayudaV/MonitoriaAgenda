@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux'
 import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
+import Agendamento from '../Agendamento';
 
 const Horario = (props) => {
     const dispatch = useDispatch();
