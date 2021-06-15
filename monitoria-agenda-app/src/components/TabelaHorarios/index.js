@@ -5,9 +5,6 @@ import Header from '../Header';
 import Horarios from '../Horarios'
 import Agendamento from '../Agendamento';
 
-import * as DateTime from '../../DateTimeController'
-
-
 const TabelaHorarios = ({ horario, dispatch }) => {
 
     const [dadosMonitores, setMonitores] = useState([]);
@@ -15,7 +12,7 @@ const TabelaHorarios = ({ horario, dispatch }) => {
     const [horarios, setHorarios] = useState({});
 
     useEffect(() => {
-        const apiUrlMonitor = 'http://localhost:5000/monitor';
+        const apiUrlMonitor = 'http://localhost:5000/monitor/nome';
 
         fetch(apiUrlMonitor)
             .then(res => res.json())
@@ -61,8 +58,10 @@ const TabelaHorarios = ({ horario, dispatch }) => {
                             <td>
                                 <select required onChange={e => atualizaCampo(e)}>
                                     {dadosMonitores.map(
-                                        (monitor) =>
-                                            <option key={monitor.idMonitor} value={monitor.idMonitor}>{monitor.nomeMonitor}</option>
+                                        (monitorAluno) =>
+                                            <option key={monitorAluno.monitor.idMonitor} 
+                                            value={monitorAluno.monitor.idMonitor}>
+                                                {monitorAluno.aluno.apelido}</option>
                                     )}
                                 </select>
                             </td>

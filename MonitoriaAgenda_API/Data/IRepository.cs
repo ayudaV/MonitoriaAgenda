@@ -20,6 +20,7 @@ namespace api.Data
         Task<Monitor[]> GetAllMonitoresAsync();
         Task<Monitor> GetMonitorByKeyAsync(int key);
         Task<Monitor> GetMonitorByEmailAsync(string email);
+        Task<MonitorAluno[]> GetMonitoresByNameAsync();
 
         // GET para Horario
         Task<Horario[]> GetAllHorariosAsync();

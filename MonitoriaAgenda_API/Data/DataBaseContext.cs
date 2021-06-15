@@ -14,8 +14,8 @@ namespace api.Data
         public DbSet<AgendaHorario> AgendaHorario { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AgendaHorario>()
-                .HasNoKey();
+            modelBuilder.Entity<AgendaHorario>().HasNoKey();
+            modelBuilder.Entity<MonitorAluno>().HasNoKey();
         }
     }
 }

@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux'
 import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
-import Agendamento from '../Agendamento';
 
-const Horario = (props) => {
+const Horarios = (props) => {
     const dispatch = useDispatch();
 
     const [dadosHorarios, setHorarios] = useState([]);
@@ -48,13 +47,21 @@ const Horario = (props) => {
         dispatch(HorarioActions.setHorario(Horario))
     }
 
+    const getHeight = (horario) => {
+        var ret = Number(DateTime.getValorFinal(horario.horaFim) - DateTime.getValorInicio(horario.horaInicio))
+        if(ret <= 20) ret = 20;
+        return ret + 'px'
+    }
     return (
         <div className="colunaHorarios" >
             {dadosHorarios.map((Horario) =>
                 <button key={Horario.idHorario}
                     className="btnHorario"
                     onClick={(e) => handleClick(e, Horario)}
-                    style={{ top: Number(DateTime.getValorInicio(Horario.horaInicio)) + 'px' }}
+                    style={{
+                        top: Number(DateTime.getValorInicio(Horario.horaInicio)) + 'px',
+                        height: getHeight(Horario)
+                    }}
                     id={"ID:" + Horario.idHorario}>
                     {DateTime.getHoraMinutos(Horario.horaInicio)} - {DateTime.getHoraMinutos(Horario.horaFim)}
                 </button>
@@ -73,4 +80,4 @@ const Horario = (props) => {
         </div>
     )
 }
-export default connect(state => ({ horario: state.horario.horario }))(Horario);
+export default connect(state => ({ horario: state.horario.horario }))(Horarios);

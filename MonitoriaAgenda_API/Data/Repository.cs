@@ -119,7 +119,15 @@ namespace api.Data
             consultaMonitores = consultaMonitores.Where(a => a.Email == email);
             return await consultaMonitores.FirstOrDefaultAsync();
         }
+        public async Task<MonitorAluno[]> GetMonitoresByNameAsync()
+        {
+            IQueryable<MonitorAluno> consultaMonitores = from m in this.context.Monitor
+            join a in this.context.Aluno on m.Email equals a.Email into loj
+            from rs in loj.DefaultIfEmpty()
 
+            select new MonitorAluno() { Monitor = m, Aluno = rs };
+            return await consultaMonitores.ToArrayAsync();
+        }
         //Horario
         public async Task<Horario[]> GetAllHorariosAsync()
         {

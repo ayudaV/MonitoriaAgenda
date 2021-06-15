@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglassStart, faHourglassEnd, faTimesCircle, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faHourglassStart, faHourglassEnd, faTimesCircle, faDollarSign, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
+import Horarios from '../Horarios';
 
-const Agendamento = ({ email, saldoDeMonitoria, horario, dispatch }) => {
+const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
     const [dadosAgendamentos, setAgendamentos] = useState([]);
     const [horaInicio, setHoraInicio] = useState(horario.horaInicio);
     const [horaFim, setHoraFim] = useState(horario.horaFim);
     const [preco, setPreco] = useState(0);
+    const [idHorario] = useState(horario.idHorario);
+    const [agendado, setAgendado] = useState(false);
+    const [descontado, setDescontado] = useState(false);
+
     const [erro, setErro] = useState('');
 
     useEffect(async () => {
@@ -42,7 +47,59 @@ const Agendamento = ({ email, saldoDeMonitoria, horario, dispatch }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log(horaFim)
+
+        const agenForm = { email, horaInicio, horaFim, preco, idHorario };
+
+        if (preco > saldoDeMonitoria)
+            setErro("Você não possui saldo suficiente para realizar o agendamento");
+
+        await fetch(`http://localhost:5000/agendamento`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(agenForm)
+        })
+            .then(
+                resp => {
+                    console.log(JSON.stringify(agenForm))
+                    if (resp.ok) {
+                        setAgendado(true);
+                        saldoDeMonitoria -= preco;
+                        const descontarSaldo = { email, senha, saldoDeMonitoria }
+
+                        fetch(`http://localhost:5000/aluno/descontarSaldo/` + email, {
+                            method: "PUT",
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(descontarSaldo)
+                        })
+                            .then(
+                                resp => {
+                                    console.log(JSON.stringify(descontarSaldo))
+                                    if (resp.ok) {
+                                        setDescontado(true);
+                                    }
+                                    else {
+                                        console.log('Problema em descontar o preço ou servidor off-line.');
+                                        setErro("Problema em descontar o preço ou servidor off-line.");
+                                    }
+                                })
+                            .catch(function (error) {
+                                console.log('There has been a problem with your fetch operation: ' + error.message);
+                            })
+                    }
+                    else {
+                        console.log('E-mail não cadastrado ou servidor off-line.');
+                        setErro("E-mail não cadastrado ou servidor off-line.");
+                    }
+                })
+            .catch(function (error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+            })
     }
     return (
         <div className="agen-background">
@@ -53,18 +110,20 @@ const Agendamento = ({ email, saldoDeMonitoria, horario, dispatch }) => {
                     <tbody>
                         <tr>
                             <td>
-                                <div className="colunaAgendamentos" >
-                                    {dadosAgendamentos.map((Agendamento) =>
-                                        <div key={Agendamento.agendamento.idAgendamento}
-                                            className="agendamento"
-                                            style={{
-                                                top: Number((DateTime.getValorInicio(Agendamento.agendamento.horaInicio) - horaInicio) * 4) + 'px',
-                                                height: Number((DateTime.getValorFinal(Agendamento.agendamento.horaFim) - DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) * 4) + 'px',
-                                                width: '200px'
-                                            }}
-                                            id={"ID:" + Agendamento.agendamento.idAgendamento}>
-                                        </div>
-                                    )}
+                                <div className="conteiner-Agendamentos">
+                                    <div style={{ height: (Number(DateTime.getValorFinal(horario.horaFim)) - Number(DateTime.getValorInicio(horario.horaInicio)) * 4) }} >
+                                        {dadosAgendamentos.map((Agendamento) =>
+                                            <div key={Agendamento.agendamento.idAgendamento}
+                                                className="agendamento"
+                                                style={{
+                                                    top: (Number(DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) - Number(DateTime.getValorInicio(horario.horaInicio))) * 4 + 'px',
+                                                    height: (Number(DateTime.getValorFinal(Agendamento.agendamento.horaFim) - DateTime.getValorInicio(Agendamento.agendamento.horaInicio))) * 4 + 'px',
+                                                    width: '198px'
+                                                }}
+                                                id={"ID:" + Agendamento.agendamento.idAgendamento}>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </td>
                             <td className="agendamento-box">
@@ -80,39 +139,44 @@ const Agendamento = ({ email, saldoDeMonitoria, horario, dispatch }) => {
                                         <label>Duração: </label>
                                         <input type="number" className="horario-input duracao"
                                             min={0}
-                                            max={DateTime.getMaxMinutos(horaInicio, horario.horaFim) >= 60 ? 60 : DateTime.getMaxMinutos(horaInicio, horaFim)}
+                                            max={DateTime.getMaxMinutos(horaInicio, horario.horaFim) >= 60 ? 60 : DateTime.getMaxMinutos(horaInicio, horario.horaFim)}
                                             step={5}
                                             onChange={({ target }) => {
+                                                console.log(DateTime.getInMinutes(horaInicio + ', ' + target.value))
                                                 setHoraFim(DateTime.dateTimeFormat(Number(DateTime.getInMinutes(horaInicio)) + Number(target.value)))
                                                 setPreco(target.value * 4)
-                                            }} />
+                                            }}
+                                            disabled={agendado} />
                                         <FontAwesomeIcon icon={faDollarSign} className="icon" />
-                                        <input className="horario-input preco" readOnly value={preco} />
+                                        <input className="horario-input preco" readOnly value={preco}  disabled={agendado}/>
                                     </div>
-                                    <input className="botao" type="submit" value="Confirmar" />{/*
-                    <br />
-                    {
-                        cadastrado ?
-                            <div>
-                                <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                                <div className="erro">
-                                    <h4 className="msgErro">{erro}</h4>
-                                </div>
-                            </div> :
-                    <h4 className="msgErro">{erro}</h4>}*/}
+                                    <input className="botao" type="submit" value="Confirmar" />
+                                    <br />
+                                    {
+                                        agendado ?
+                                            <div>
+                                                <h4 className="msgSucesso">Agendamento realizado com Sucesso!</h4>
+                                            </div>
+                                            :
+                                            erro ?
+                                                <div className="erro">
+                                                    <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                                    <h4 className="msgErro">{erro}</h4>
+                                                </div> :
+                                                <></>
+                                    }
                                 </form>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
-
             </div>
         </div>
     )
 }
 export default connect(state => ({
     email: state.login.user.email,
+    senha: state.login.user.senha,
     saldoDeMonitoria: state.login.user.saldoDeMonitoria,
     horario: state.horario.horario,
 }))(Agendamento);

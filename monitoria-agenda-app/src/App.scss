@@ -55,26 +55,6 @@ h1 {
   height: 350px;
   border-radius: 10px;
 }
-/*
-.container-horario {
-  fill-opacity: 0;
-  stroke: #6cd5f5;
-  stroke-width: 1px;
-  rx: 2px;
-}
-.container-horario:hover {
-  cursor: pointer;
-}
-.texto-horario {
-  fill: #6cd5f5;
-  font-size: 13px;
-}
-.container-agendamento {
-  stroke: #ffffff;
-  stroke-width: 1px;
-  rx: 2px;
-  fill: rgb(139, 15, 15);
-}*/
 .colunaHorarios {
   height: 600px;
   width: 100px;
@@ -87,7 +67,7 @@ h1 {
   border-radius: 3px;
   color: whitesmoke;
   position: absolute;
-  width:100px
+  width: 100px;
 }
 .agendamento {
   background-color: rgb(196, 48, 48);
@@ -95,10 +75,10 @@ h1 {
   border-radius: 3px;
   color: whitesmoke;
   position: absolute;
-  width:100px
+  width: 100px;
 }
 .btnHorario:hover {
- cursor: pointer;
+  cursor: pointer;
 }
 .container-tabelaHorarios {
   border-radius: 10px;
@@ -138,9 +118,8 @@ h1 {
 }
 .monitor-select {
   margin: auto;
-
 }
-.monitor-select *{
+.monitor-select * {
   font-family: Arial;
   border-radius: 3px;
   margin: 10px;
@@ -177,7 +156,9 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  &:hover {background-color: #111;}
+  &:hover {
+    background-color: #111;
+  }
 }
 .nav-logo {
   width: 70px;
@@ -193,7 +174,7 @@ li a {
 }
 .title {
   color: whitesmoke;
-  font-size: 30px ;
+  font-size: 30px;
 }
 
 .agen-background {
@@ -207,7 +188,6 @@ li a {
 }
 .container-agen {
   width: 40%;
-  height: 60%;
   background-color: #363636;
   margin: auto;
   border-radius: 10px;
@@ -231,15 +211,19 @@ li a {
 }
 .tableAgendamento {
   width: 100%;
-  height: 100px;
+  height: 120px;
   margin: auto;
 }
-.colunaAgendamentos {
-  height: 300px;
+.conteiner-Agendamentos {
+  height: 200px;
   width: 200px;
   position: relative;
   text-align: left;
   margin-top: 20px;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .horario-input {
   width: 25px;

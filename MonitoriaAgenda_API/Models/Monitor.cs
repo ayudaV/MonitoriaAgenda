@@ -7,6 +7,5 @@ namespace api.Models
         [Key]
         public int IdMonitor { get; set; }
         public string Email { get; set; }
-        public string NomeMonitor { get; set; }
     }
 }

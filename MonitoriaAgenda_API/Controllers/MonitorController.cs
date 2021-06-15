@@ -26,6 +26,18 @@ namespace api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("nome")]
+        public async Task<IActionResult> GetAllByName() {
+                try {
+                var result = await repository.GetMonitoresByNameAsync();
+                if (result == null)
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                return Ok(result);
+            }
+            catch {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
+            }
+        }
         [HttpGet("{Email}")]
         public async Task<IActionResult> Get(string email) {
             try {

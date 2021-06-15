@@ -14,9 +14,12 @@ export const getMaxMinutos = (timeIni, timeFim) => (
     )
 
 export const dateTimeFormat = (minutes) => {
+    console.log('minutos: ' + minutes)
     var horas = (minutes / 60).toFixed(0);
-    if(horas < 10) horas = horas.padStart(2,'0')
-    const minutos = minutes % 60;
+    if(horas < 10) horas = horas.padStart(2,'0');
+    var minutos = (minutes % 60).toFixed(0);
+    if(minutos < 10) minutos = minutos.padStart(2,'0');
+
     return ('1900-01-01T' + horas + ':' + minutos + ':00')
 }
 export const getInMinutes = str => (
