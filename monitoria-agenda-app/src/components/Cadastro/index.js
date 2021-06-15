@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+//import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle, faUser } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
     const [apelido, setApelido] = useState("");
     const [senha, setPassword] = useState("");
     const [erro, setErro] = useState('');
-    const cadastrado = false;
+    var cadastrado = false;
 
     const handleSubmit = async e => {
         e.preventDefault();

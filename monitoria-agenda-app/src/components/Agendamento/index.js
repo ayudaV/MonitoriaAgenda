@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHourglassStart, faHourglassEnd, faTimesCircle, faDollarSign, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
-import Horarios from '../Horarios';
 
 const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
@@ -18,11 +17,11 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
     const [erro, setErro] = useState('');
 
-    useEffect(async () => {
+    useEffect(() => {
         const apiUrlAgendamento = 'http://localhost:5000/agendamento/horario/' + horario.idHorario;
         console.log("link:" + apiUrlAgendamento)
 
-        await fetch(apiUrlAgendamento)
+        fetch(apiUrlAgendamento)
             .then(res => res.json())
             .then((result) => {
                 setAgendamentos(result);
@@ -36,8 +35,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
             .catch(function (error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
             })
-
-    }, [])
+    },[])// eslint-disable-line react-hooks/exhaustive-deps
 
     function handleClick(e) {
         e.preventDefault();
@@ -148,7 +146,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                                             }}
                                             disabled={agendado} />
                                         <FontAwesomeIcon icon={faDollarSign} className="icon" />
-                                        <input className="horario-input preco" readOnly value={preco}  disabled={agendado}/>
+                                        <input className="horario-input preco" readOnly value={preco} disabled={agendado} />
                                     </div>
                                     <input className="botao" type="submit" value="Confirmar" />
                                     <br />
@@ -156,6 +154,10 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                                         agendado ?
                                             <div>
                                                 <h4 className="msgSucesso">Agendamento realizado com Sucesso!</h4>
+                                                {descontado ?
+                                                    <p>O valor foi descontado de sua conta</p> :
+                                                    <p>Ocorreu um erro na hora de descontar o saldo. {erro}</p>
+                                                }
                                             </div>
                                             :
                                             erro ?

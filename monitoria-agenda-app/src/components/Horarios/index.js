@@ -39,7 +39,7 @@ const Horarios = (props) => {
                     console.log({ error });
                 }
             )
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     function handleClick(e, Horario) {
         e.preventDefault();
