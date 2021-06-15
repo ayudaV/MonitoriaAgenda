@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHourglassStart, faHourglassEnd, faTimesCircle, faDollarSign, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
+import * as DescontarActions from '../../store/actions/descontar'
 
 const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
     const [dadosAgendamentos, setAgendamentos] = useState([]);
     const [horaInicio, setHoraInicio] = useState(horario.horaInicio);
-    const [horaFim, setHoraFim] = useState(horario.horaFim);
+    const [horaFim, setHoraFim] = useState();
     const [preco, setPreco] = useState(0);
     const [idHorario] = useState(horario.idHorario);
     const [agendado, setAgendado] = useState(false);
@@ -35,7 +36,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
             .catch(function (error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
             })
-    },[])// eslint-disable-line react-hooks/exhaustive-deps
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     function handleClick(e) {
         e.preventDefault();
@@ -48,6 +49,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
         const agenForm = { email, horaInicio, horaFim, preco, idHorario };
 
+        console.log(horaFim)
         if (preco > saldoDeMonitoria)
             setErro("Você não possui saldo suficiente para realizar o agendamento");
 
@@ -80,10 +82,11 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                                     console.log(JSON.stringify(descontarSaldo))
                                     if (resp.ok) {
                                         setDescontado(true);
+                                        dispatch(DescontarActions.setSaldo(saldoDeMonitoria))
                                     }
                                     else {
                                         console.log('Problema em descontar o preço ou servidor off-line.');
-                                        setErro("Problema em descontar o preço ou servidor off-line.");
+                                        setErro(" Problema em descontar o preço ou servidor off-line.");
                                     }
                                 })
                             .catch(function (error) {
@@ -92,7 +95,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                     }
                     else {
                         console.log('E-mail não cadastrado ou servidor off-line.');
-                        setErro("E-mail não cadastrado ou servidor off-line.");
+                        setErro(" E-mail não cadastrado ou servidor off-line.");
                     }
                 })
             .catch(function (error) {
@@ -109,13 +112,14 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                         <tr>
                             <td>
                                 <div className="conteiner-Agendamentos">
-                                    <div style={{ height: (Number(DateTime.getValorFinal(horario.horaFim)) - Number(DateTime.getValorInicio(horario.horaInicio)) * 4) }} >
+                                    <div style={{ height: DateTime.getHeight(horario.horaInicio, horario.horaFim) * 4 + 'px' }} >
                                         {dadosAgendamentos.map((Agendamento) =>
                                             <div key={Agendamento.agendamento.idAgendamento}
                                                 className="agendamento"
                                                 style={{
-                                                    top: (Number(DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) - Number(DateTime.getValorInicio(horario.horaInicio))) * 4 + 'px',
-                                                    height: (Number(DateTime.getValorFinal(Agendamento.agendamento.horaFim) - DateTime.getValorInicio(Agendamento.agendamento.horaInicio))) * 4 + 'px',
+                                                    top: (DateTime.getTop(Agendamento.agendamento.horaInicio)
+                                                        - DateTime.getTop(horario.horaInicio)) * 4 + 'px',
+                                                    height: DateTime.getHeight(Agendamento.agendamento.horaInicio, Agendamento.agendamento.horaFim) * 4 + 'px',
                                                     width: '198px'
                                                 }}
                                                 id={"ID:" + Agendamento.agendamento.idAgendamento}>
@@ -141,7 +145,7 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                                             step={5}
                                             onChange={({ target }) => {
                                                 console.log(DateTime.getInMinutes(horaInicio + ', ' + target.value))
-                                                setHoraFim(DateTime.dateTimeFormat(Number(DateTime.getInMinutes(horaInicio)) + Number(target.value)))
+                                                setHoraFim(DateTime.dateTimeFormat(DateTime.getInMinutes(horaInicio) + Number(target.value)))
                                                 setPreco(target.value * 4)
                                             }}
                                             disabled={agendado} />
@@ -162,8 +166,10 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
                                             :
                                             erro ?
                                                 <div className="erro">
-                                                    <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                                                    <h4 className="msgErro">{erro}</h4>
+                                                    <h5 className="msgErro">
+                                                        <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                                        {erro}
+                                                    </h5>
                                                 </div> :
                                                 <></>
                                     }

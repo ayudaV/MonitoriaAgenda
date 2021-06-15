@@ -1,7 +1,15 @@
 body {
   background-color: rgb(29, 29, 29);
+  margin: 0px;
 }
-
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .container-login {
   text-align: center;
   color: white;
@@ -9,8 +17,11 @@ body {
   padding: 20px;
   width: 300px;
   border-radius: 20px;
-  margin: auto;
-  margin-top: 100px;
+  -webkit-animation: mover 0.5s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 0.5s alternate; /* Firefox < 16 */
+  animation: mover 0.5s alternate;
+  justify-content: center;
+  align-items: center;
 }
 .icon {
   padding-right: 5px;
@@ -60,6 +71,9 @@ h1 {
   width: 100px;
   position: relative;
   text-align: left;
+  -webkit-animation: mover 1s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 1s alternate; /* Firefox < 16 */
+  animation: mover 1s alternate;
 }
 .btnHorario {
   background-color: rgba(255, 255, 255, 0);
@@ -88,6 +102,9 @@ h1 {
   text-align: center;
   margin-top: 30px;
   padding: 20px;
+  -webkit-animation: mover 1s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 1s alternate; /* Firefox < 16 */
+  animation: mover 1s alternate;
 }
 .title-horarios {
   color: whitesmoke;
@@ -195,6 +212,9 @@ li a {
   margin-top: 10%;
   padding: 20px;
   z-index: 2;
+  -webkit-animation: mover 0.5s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 0.5s alternate; /* Firefox < 16 */
+  animation: mover 0.5s alternate;
 }
 .agendamento-box {
   vertical-align: top;
@@ -232,5 +252,35 @@ li a {
   &.duracao {
     width: 40px;
     margin-right: 15px;
+  }
+}
+.msgErro {
+  background-color: rgb(185, 34, 34);
+  color: whitesmoke;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+.msgCadastrado {
+  background-color: rgb(11, 138, 17);
+  color: whitesmoke;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+@-webkit-keyframes mover {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes mover {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

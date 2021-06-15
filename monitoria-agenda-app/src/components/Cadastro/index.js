@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
-//import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle, faUser } from '@fortawesome/free-solid-svg-icons';
-import {connect} from 'react-redux';
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
 
-const Cadastro = ({saldoDeMonitoria, role}) => {
+const Cadastro = () => {
     const [email, setUsuario] = useState("");
     const [apelido, setApelido] = useState("");
     const [senha, setPassword] = useState("");
     const [erro, setErro] = useState('');
-    var cadastrado = false;
+    const [cadastrado, setCadastro] = useState(false);
+
+    const saldoDeMonitoria = 500;
+    const role = 'Aluno';
 
     const handleSubmit = async e => {
         e.preventDefault();
+        if (email.search('@g.unicamp.br') < 0) return setErro(" Digite um email válido!")
 
-        const userForm = { email, senha, apelido, saldoDeMonitoria, role};
+        if (apelido.length < 1) return setErro(" Coloque um apelido válido!")
+
+        if (senha.length <= 3) return setErro(" Coloque uma senha com mais de 3 dígitos")
+
+        const userForm = { email, senha, apelido, saldoDeMonitoria, role };
 
         await fetch(`http://localhost:5000/home/signup`, {
             method: "POST",
@@ -30,10 +37,10 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
                 resp => {
                     console.log(JSON.stringify(userForm))
                     if (resp.ok) {
-                        return cadastrado = true;
+                        setCadastro(true);
                     }
                     else {
-                        console.log('E-mail já cadastrado ou servidor off-line.');
+                        console.log(' E-mail já cadastrado ou servidor off-line.');
                         setErro("E-mail já cadastrado ou servidor off-line.");
                     }
                 })
@@ -42,38 +49,46 @@ const Cadastro = ({saldoDeMonitoria, role}) => {
             })
     }
     return (
-        <div className="container-login">
-        <img className="logo" src={Logo} alt="Logo Monitoria Agenda" />
-        <form onSubmit={handleSubmit}>
-            <h1>Cadastro</h1>
-            <div className="textbox">
-                <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                <input type="email" value={email} onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
-            </div>
-            <div className="textbox">
-                <FontAwesomeIcon icon={faUser} className="icon" />
-                <input type="text" value={apelido} onChange={({ target }) => setApelido(target.value)} name="" placeholder="Apelido" id="" />
-            </div>
-            <div className="textbox">
-                <FontAwesomeIcon icon={faLock} className="icon" />
-                <input type="password" value={senha} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
-            </div>
-            <input className="botao" type="submit" value="Cadastrar" />
-            <br />
-            {
-                cadastrado ?
-                    <div>
-                        <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                        <div className="erro">
-                            <h4 className="msgErro">{erro}</h4>
-                        </div>
-                    </div> :
-                    <h4 className="msgErro">{erro}</h4>}
-        </form>
+        <div className="container">
+            <div className="container-login">
+                <img className="logo" src={Logo} alt="Logo Monitoria Agenda" />
+                <form onSubmit={handleSubmit}>
+                    <h1>Cadastro</h1>
+                    <div className="textbox">
+                        <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                        <input type="email"  autofocus="autofocus" value={email} onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                    </div>
+                    <div className="textbox">
+                        <FontAwesomeIcon icon={faUser} className="icon" />
+                        <input type="text" value={apelido} onChange={({ target }) => setApelido(target.value)} name="" placeholder="Apelido" id="" />
+                    </div>
+                    <div className="textbox">
+                        <FontAwesomeIcon icon={faLock} className="icon" />
+                        <input type="password" value={senha} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
+                    </div>
+                    <input className="botao" type="submit" value="Cadastrar" />
+                    <br />
+                    {
+                        cadastrado ?
+                            <div>
+                                <div className="successful">
+                                    <h4 className="msgCadastrado">Cadastro realizado com sucesso!</h4>
+                                    <Link to="/">Voltar ao login</Link>
+                                </div>
+                            </div> : <>
+                                {erro ?
+                                    <>
+                                        <h4 className="msgErro">
+                                            < FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                            {erro}
+                                        </h4>
+                                    </> : <></>
+                                }
+                            </>
+                    }
+                </form>
+            </div >
         </div>
     )
 };
-export default connect(state => ({
-    saldoDeMonitoria: state.user.saldoDeMonitoria,
-    role: state.user.role,
-}))(Cadastro);
+export default Cadastro;

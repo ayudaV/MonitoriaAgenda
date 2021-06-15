@@ -9,7 +9,7 @@ import * as LoginActions from '../../store/actions/login'
 
 import Logo from '../../assets/images/monitoriaAgenda.png';
 
-const Login = ({ usuario, dispatch }) => {
+const Login = ({ dispatch }) => {
     const [email, setUsuario] = useState("");
     const [senha, setPassword] = useState("");
     const [user, setUser] = useState();
@@ -57,41 +57,44 @@ const Login = ({ usuario, dispatch }) => {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
             })
     }
+
     return (
-        user ? <Redirect to="/horarios" />:
-         <div className="container-login">
-            <img className="logo" src={Logo} alt="Logo Monitoria Agenda" />
-            <form onSubmit={handleSubmit}>
-                <h1>Login</h1>
-                <div className="textbox">
-                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                    <input type="email" value={email}  onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+        user ? <Redirect to="/horarios" /> :
+            <div className="container">
+                <div className="container-login">
+                    <img className="logo" src={Logo} alt="Logo Monitoria Agenda" />
+                    <form onSubmit={handleSubmit}>
+                        <h1>Login</h1>
+                        <div className="textbox">
+                            <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                            <input type="email" value={email} onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                        </div>
+                        <div className="textbox">
+                            <FontAwesomeIcon icon={faLock} className="icon" />
+                            <input type="password" value={senha} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
+                        </div>
+                        <div className="mostrar">
+                            <input type="checkbox" onClick={mostrarSenha} id="mostrar" /> <span className="txt">Mostrar Senha</span>
+                            <span className="checkmark"></span>
+                        </div>
+                        <input className="botao" type="submit" value="Entrar" />
+                        <p>
+                            Não tem conta? <Link to="/cadastro"><b>Cadastre-se!</b></Link>
+                        </p>
+                        {
+                            erro ?
+                                <div>
+                                    <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                    <div className="erro">
+                                        <h4 className="msgErro">{erro}</h4>
+                                    </div>
+                                </div> :
+                                <></>
+                        }
+                    </form>
                 </div>
-                <div className="textbox">
-                    <FontAwesomeIcon icon={faLock} className="icon" />
-                    <input type="password" value={senha} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
-                </div>
-                <div className="mostrar">
-                    <input type="checkbox" onClick={mostrarSenha} id="mostrar" /> <span className="txt">Mostrar Senha</span>
-                    <span className="checkmark"></span>
-                </div>
-                <input className="botao" type="submit" value="Entrar" />
-                <p>
-                    Não tem conta? <Link to="/cadastro"><b>Cadastre-se!</b></Link>
-                </p>
-                {
-                    erro ?
-                        <div>
-                            <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                            <div className="erro">
-                                <h4 className="msgErro">   {erro}</h4></div></div> :
-                        <h4 className="msgErro">{erro}</h4>
-                }
-            </form>
-            <strong>{usuario.email}</strong>
-            <strong>{usuario.password}</strong>
-        </div>
+            </div>
     )
 
 };
-export default connect(state => ({ usuario: state.login.user }))(Login);
+export default connect()(Login);

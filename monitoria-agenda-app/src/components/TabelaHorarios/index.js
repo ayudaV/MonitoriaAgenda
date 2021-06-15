@@ -8,7 +8,7 @@ import Agendamento from '../Agendamento';
 const TabelaHorarios = ({ horario, dispatch }) => {
 
     const [dadosMonitores, setMonitores] = useState([]);
-    const [monitor, setMonitor] = useState({ idMonitor: 1 });
+    const [idMonitor, setIdMonitor] = useState(1);
     const [horarios, setHorarios] = useState({});
 
     useEffect(() => {
@@ -27,27 +27,24 @@ const TabelaHorarios = ({ horario, dispatch }) => {
                 }
             )
     }, [])
+
     const atualizaCampo = (e) => {
-        monitor.idMonitor = e.target.value;
-        setMonitor(monitor);
+        setIdMonitor(e.target.value);
         setHorarios({})
-        console.log(monitor)
     }
     const atualizaHorario = () => {
         console.log('Atualizando Horarios')
         setHorarios(
             {
-                hr1: <Horarios diaSemana={1} idMonitor={Number(monitor.idMonitor)} />,
-                hr2: <Horarios diaSemana={2} idMonitor={Number(monitor.idMonitor)} />,
-                hr3: <Horarios diaSemana={3} idMonitor={Number(monitor.idMonitor)} />,
-                hr4: <Horarios diaSemana={4} idMonitor={Number(monitor.idMonitor)} />,
-                hr5: <Horarios diaSemana={5} idMonitor={Number(monitor.idMonitor)} />,
-                hr6: <Horarios diaSemana={6} idMonitor={Number(monitor.idMonitor)} />,
-                hr7: <Horarios diaSemana={7} idMonitor={Number(monitor.idMonitor)} />,
+                hr1: <Horarios diaSemana={1} idMonitor={Number(idMonitor)} />,
+                hr2: <Horarios diaSemana={2} idMonitor={Number(idMonitor)} />,
+                hr3: <Horarios diaSemana={3} idMonitor={Number(idMonitor)} />,
+                hr4: <Horarios diaSemana={4} idMonitor={Number(idMonitor)} />,
+                hr5: <Horarios diaSemana={5} idMonitor={Number(idMonitor)} />,
+                hr6: <Horarios diaSemana={6} idMonitor={Number(idMonitor)} />,
+                hr7: <Horarios diaSemana={7} idMonitor={Number(idMonitor)} />,
             })
     }
-
-
     const renderTable = () => {
         return (
             <div className="container-tabelaHorarios">
@@ -59,15 +56,14 @@ const TabelaHorarios = ({ horario, dispatch }) => {
                                 <select required onChange={e => atualizaCampo(e)}>
                                     {dadosMonitores.map(
                                         (monitorAluno) =>
-                                            <option key={monitorAluno.monitor.idMonitor} 
-                                            value={monitorAluno.monitor.idMonitor}>
+                                            <option key={monitorAluno.monitor.idMonitor}
+                                                value={monitorAluno.monitor.idMonitor}>
                                                 {monitorAluno.aluno.apelido}</option>
                                     )}
                                 </select>
                             </td>
                             <td>
                                 <button onClick={e => atualizaHorario(e)}>Carrregar</button>
-
                             </td>
                         </tr>
                     </tbody>

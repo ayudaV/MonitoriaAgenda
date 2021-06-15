@@ -46,12 +46,6 @@ const Horarios = (props) => {
         console.log('Horario Clicado.');
         dispatch(HorarioActions.setHorario(Horario))
     }
-
-    const getHeight = (horario) => {
-        var ret = Number(DateTime.getValorFinal(horario.horaFim) - DateTime.getValorInicio(horario.horaInicio))
-        if(ret <= 20) ret = 20;
-        return ret + 'px'
-    }
     return (
         <div className="colunaHorarios" >
             {dadosHorarios.map((Horario) =>
@@ -59,8 +53,8 @@ const Horarios = (props) => {
                     className="btnHorario"
                     onClick={(e) => handleClick(e, Horario)}
                     style={{
-                        top: Number(DateTime.getValorInicio(Horario.horaInicio)) + 'px',
-                        height: getHeight(Horario)
+                        top: DateTime.getTop(Horario.horaInicio),
+                        height: DateTime.getHeight(Horario.horaInicio, Horario.horaFim, true)
                     }}
                     id={"ID:" + Horario.idHorario}>
                     {DateTime.getHoraMinutos(Horario.horaInicio)} - {DateTime.getHoraMinutos(Horario.horaFim)}
@@ -71,8 +65,8 @@ const Horarios = (props) => {
                     disabled
                     className="agendamento"
                     style={{
-                        top: Number(DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) + 'px',
-                        height: Number(DateTime.getValorFinal(Agendamento.agendamento.horaFim) - DateTime.getValorInicio(Agendamento.agendamento.horaInicio)) + 'px'
+                        top: DateTime.getTop(Agendamento.agendamento.horaInicio),
+                        height:  DateTime.getHeight(Agendamento.agendamento.horaInicio,Agendamento.agendamento.horaFim)
                     }}
                     id={"ID:" + Agendamento.agendamento.idAgendamento}>
                 </button>
