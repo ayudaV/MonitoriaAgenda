@@ -1,7 +1,15 @@
 body {
   background-color: rgb(29, 29, 29);
+  margin: 0px;
 }
-
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .container-login {
   text-align: center;
   color: white;
@@ -9,8 +17,11 @@ body {
   padding: 20px;
   width: 300px;
   border-radius: 20px;
-  margin: auto;
-  margin-top: 100px;
+  -webkit-animation: mover 0.5s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 0.5s alternate; /* Firefox < 16 */
+  animation: mover 0.5s alternate;
+  justify-content: center;
+  align-items: center;
 }
 .icon {
   padding-right: 5px;
@@ -55,24 +66,34 @@ h1 {
   height: 350px;
   border-radius: 10px;
 }
-
-.container-horario {
-  fill-opacity: 0;
-  stroke: #6cd5f5;
-  stroke-width: 1px;
-  rx: 2px;
+.colunaHorarios {
+  height: 600px;
+  width: 100px;
+  position: relative;
+  text-align: left;
+  -webkit-animation: mover 1s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 1s alternate; /* Firefox < 16 */
+  animation: mover 1s alternate;
 }
-.texto-horario {
-  fill: #6cd5f5;
-  font-size: 13px;
+.btnHorario {
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid #6cd5f5;
+  border-radius: 3px;
+  color: whitesmoke;
+  position: absolute;
+  width: 100px;
 }
-.container-agendamento {
-  stroke: #ffffff;
-  stroke-width: 1px;
-  rx: 2px;
-  fill: rgb(139, 15, 15);
+.agendamento {
+  background-color: rgb(196, 48, 48);
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  color: whitesmoke;
+  position: absolute;
+  width: 100px;
 }
-
+.btnHorario:hover {
+  cursor: pointer;
+}
 .container-tabelaHorarios {
   border-radius: 10px;
   width: 60%;
@@ -81,6 +102,9 @@ h1 {
   text-align: center;
   margin-top: 30px;
   padding: 20px;
+  -webkit-animation: mover 1s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 1s alternate; /* Firefox < 16 */
+  animation: mover 1s alternate;
 }
 .title-horarios {
   color: whitesmoke;
@@ -109,7 +133,27 @@ h1 {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(172, 172, 172);
 }
+.monitor-select {
+  margin: auto;
+}
+.monitor-select * {
+  font-family: Arial;
+  border-radius: 3px;
+  margin: 10px;
+  padding: 5px;
+  border: none;
+  color: whitesmoke;
+}
 
+.monitor-select select {
+  width: 180px;
+  background-color: #333;
+  margin-right: 0;
+}
+.monitor-select button {
+  background-color: #414141;
+  width: 130px;
+}
 nav {
   list-style-type: none;
   margin: 0;
@@ -129,11 +173,9 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
+  &:hover {
+    background-color: #111;
+  }
 }
 .nav-logo {
   width: 70px;
@@ -147,31 +189,98 @@ li a:hover {
   text-align: right;
   padding: 7px;
 }
-/*
-.monitor-select {
-  width: 180px;
-  background-color: #333;
-  border: none;
-  padding: 5px;
+.title {
   color: whitesmoke;
-  margin: 10px;
-  border-radius: 3px;
+  font-size: 30px;
 }
 
-*/
-/* The container must be positioned relative: */
-.monitor-select {
-  font-family: Arial;
+.agen-background {
+  position: absolute;
+  x: 0;
+  y: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(17, 17, 17, 0.5);
+  z-index: 2;
+}
+.container-agen {
+  width: 40%;
+  background-color: #363636;
   margin: auto;
-  width: 200px;
-}
-
-.monitor-select select {
-  width: 180px;
-  background-color: #333;
-  border: none;
-  padding: 5px;
+  border-radius: 10px;
   color: whitesmoke;
-  margin: 10px;
+  margin-top: 10%;
+  padding: 20px;
+  z-index: 2;
+  -webkit-animation: mover 0.5s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 0.5s alternate; /* Firefox < 16 */
+  animation: mover 0.5s alternate;
+}
+.agendamento-box {
+  vertical-align: top;
+}
+.close {
+  text-align: right;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.icon-close {
+  font-size: 20px;
+}
+.tableAgendamento {
+  width: 100%;
+  height: 120px;
+  margin: auto;
+}
+.conteiner-Agendamentos {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  text-align: left;
+  margin-top: 20px;
+  background-color: whitesmoke;
   border-radius: 3px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.horario-input {
+  width: 25px;
+  margin: 2px;
+
+  &.duracao {
+    width: 40px;
+    margin-right: 15px;
+  }
+}
+.msgErro {
+  background-color: rgb(185, 34, 34);
+  color: whitesmoke;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+.msgCadastrado {
+  background-color: rgb(11, 138, 17);
+  color: whitesmoke;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+@-webkit-keyframes mover {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes mover {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

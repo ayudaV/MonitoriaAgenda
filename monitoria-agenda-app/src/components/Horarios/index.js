@@ -1,98 +1,77 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
-class Horario extends Component {
+import { connect, useDispatch } from 'react-redux'
+import * as HorarioActions from '../../store/actions/horario'
+import * as DateTime from '../../DateTimeController'
 
-    constructor(props) {
-        super(props)
+const Horarios = (props) => {
+    const dispatch = useDispatch();
 
-        const diaSemana = this.props.diaSemana;
-        const idMonitor = this.props.idMonitor;
+    const [dadosHorarios, setHorarios] = useState([]);
+    const [dadosAgendamentos, setAgendamentos] = useState([]);
 
+    const diaSemana = props.diaSemana;
+    const idMonitor = props.idMonitor;
+
+
+
+    useEffect(() => {
         const apiUrlHorario = 'http://localhost:5000/horario/dayMonitor/' + diaSemana + '/' + idMonitor;
         const apiUrlAgendamento = 'http://localhost:5000/agendamento/dayMonitor/' + diaSemana + '/' + idMonitor;
         console.log("link:" + apiUrlHorario)
-        console.log("link:" + apiUrlAgendamento)
 
-        const stateInicial = {
-            apiUrlHorario,
-            horario: { idHorario: 1, diaDaSemana: 1, horaInicio: 0, horaFim: 0, idMonitor: 1 },
-            dadosHorarios: [],
-
-            apiUrlAgendamento,
-            agendamento: {idAgendamento: 1, email:'', idMonitor: 1, diaDaSemana: 1, horaInicio: 0, horaFim: 0, preco: 0},
-            dadosAgendamento: []
-        }
-        this.state = {
-            ...stateInicial
-        };
-    }
-
-    async componentDidMount() {
-        await fetch(this.state.apiUrlHorario)
+        fetch(apiUrlHorario)
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({
-                        dadosHorarios: result
-                    });
-                    console.log("Função didMount:" + JSON.stringify(result));
+                    setHorarios(result)
                 },
                 (error) => {
-                    this.setState({ error });
-                });
-        await fetch(this.state.apiUrlAgendamento)
+                    console.log({ error });
+                }
+            )
+        fetch(apiUrlAgendamento)
             .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        dadosAgendamento: result
-                    });
-                    console.log("Função didMount:" + JSON.stringify(result));
-                },
+            .then((result) => {
+                setAgendamentos(result);
+            },
                 (error) => {
-                    this.setState({ error });
-                });
-    }
+                    console.log({ error });
+                }
+            )
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    getValorInicio(a) {
-        return ((Number(a.substring(11, 13) * 100) + Number(a.substring(14, 16)) * 1.666666) / 4)
+    function handleClick(e, Horario) {
+        e.preventDefault();
+        console.log('Horario Clicado.');
+        dispatch(HorarioActions.setHorario(Horario))
     }
-
-    getValorFinal(b) {
-        return ((Number(b.substring(11, 13) * 100) + Number(b.substring(14, 16)) * 1.666666) / 4)
-    }
-    render() {
-        return (
-            <svg width="100" height="600">
-                {this.state.dadosHorarios.map((Horario) =>
-                    <g key={Horario.idHorario}>
-                        <rect className="container-horario"
-                            x="2"
-                            y={this.getValorInicio(Horario.horaInicio)}
-                            height={this.getValorFinal(Horario.horaFim) - this.getValorInicio(Horario.horaInicio)}
-                            width="96px"
-                            id={"ID:" + Horario.idHorario} />
-                        <text className="texto-horario" x="4" y={this.getValorFinal(Horario.horaFim) - 5} width="100">
-                            {Horario.horaInicio.substring(11, 16)} - {Horario.horaFim.substring(11, 16)}
-                        </text>
-                    </g>
-                )}
-                {this.state.dadosAgendamento.map((Agendamento) =>
-                    <g key={Agendamento.idAgendamento}>
-                        <rect className="container-agendamento"
-                            x="1"
-                            y={this.getValorInicio(Agendamento.horaInicio)}
-                            height={this.getValorFinal(Agendamento.horaFim) - this.getValorInicio(Agendamento.horaInicio)}
-                            width="98px"
-                            id={"ID:" + Agendamento.idHorario} />
-                    </g>
-                )}
-            </svg>
-        )
-    }
-
-    carregar(Horario) {
-        this.setState({ Horario })
-    }
+    return (
+        <div className="colunaHorarios" >
+            {dadosHorarios.map((Horario) =>
+                <button key={Horario.idHorario}
+                    className="btnHorario"
+                    onClick={(e) => handleClick(e, Horario)}
+                    style={{
+                        top: DateTime.getTop(Horario.horaInicio),
+                        height: DateTime.getHeight(Horario.horaInicio, Horario.horaFim, true)
+                    }}
+                    id={"ID:" + Horario.idHorario}>
+                    {DateTime.getHoraMinutos(Horario.horaInicio)} - {DateTime.getHoraMinutos(Horario.horaFim)}
+                </button>
+            )}
+            {dadosAgendamentos.map((Agendamento) =>
+                <button key={Agendamento.agendamento.idAgendamento}
+                    disabled
+                    className="agendamento"
+                    style={{
+                        top: DateTime.getTop(Agendamento.agendamento.horaInicio),
+                        height:  DateTime.getHeight(Agendamento.agendamento.horaInicio,Agendamento.agendamento.horaFim)
+                    }}
+                    id={"ID:" + Agendamento.agendamento.idAgendamento}>
+                </button>
+            )}
+        </div>
+    )
 }
-export default Horario;
+export default connect(state => ({ horario: state.horario.horario }))(Horarios);

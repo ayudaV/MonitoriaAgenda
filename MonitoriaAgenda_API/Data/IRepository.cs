@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Linq;
 using api.Models;
 
 namespace api.Data
@@ -19,6 +20,7 @@ namespace api.Data
         Task<Monitor[]> GetAllMonitoresAsync();
         Task<Monitor> GetMonitorByKeyAsync(int key);
         Task<Monitor> GetMonitorByEmailAsync(string email);
+        Task<MonitorAluno[]> GetMonitoresByNameAsync();
 
         // GET para Horario
         Task<Horario[]> GetAllHorariosAsync();
@@ -30,8 +32,9 @@ namespace api.Data
         // GET para Horario
         Task<Agendamento[]> GetAllAgendamentosAsync();
         Task<Agendamento> GetAgendamentoByKeyAsync(int key);
-        Task<Agendamento[]> GetAgendamentoByDayAsync(int day);
-        Task<Agendamento[]> GetAgendamentoByMonitorAsync(int idMonitor);
-        Task<Agendamento[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor);
+        Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day);
+        Task<AgendaHorario[]> GetAgendamentoByMonitorAsync(int idMonitor);
+        Task<AgendaHorario[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor);
+        Task<AgendaHorario[]> GetAgendamentoByHorarioAsync(int idHorario);
     }
 }
