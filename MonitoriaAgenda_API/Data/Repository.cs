@@ -69,13 +69,13 @@ namespace api.Data
             select new AgendaHorario() { Agendamento = a, Horario = rs };
             return await consultaAgendamentos.ToArrayAsync();
         }
-        public async Task<AgendaHorario[]> GetAgendamentoByMonitorAsync(int idMonitor) {
-            IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
-            join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
+        public async Task<AgendaAluno[]> GetAlunoAgendamentoByHorarioAsync(int idHorario) {
+            IQueryable<AgendaAluno> consultaAgendamentos = from a in this.context.Aluno
+            join ag in this.context.Agendamento on a.Email equals ag.Email into loj
             from rs in loj.DefaultIfEmpty()
             where
-                rs.IdMonitor == idMonitor
-            select new AgendaHorario() { Agendamento = a, Horario = rs };
+                rs.IdHorario == idHorario
+            select new AgendaAluno() { Agendamento = rs, Aluno = a };
             return await consultaAgendamentos.ToArrayAsync();
         }
         public async Task<AgendaHorario[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor) {

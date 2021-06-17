@@ -54,10 +54,10 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("monitor/{IdMonitor}")]
-        public async Task<IActionResult> GetAllAgendamentoByMonitor(int idMonitor) {
+        [HttpGet("monitor/{IdHorario}")]
+        public async Task<IActionResult> GetAllAlunoAgendamentoByHorario(int idHorario) {
                 try {
-                var result = await repository.GetAgendamentoByMonitorAsync(idMonitor);
+                var result = await repository.GetAlunoAgendamentoByHorarioAsync(idHorario);
                 if (result == null)
                     return this.StatusCode(StatusCodes.Status404NotFound);
                     

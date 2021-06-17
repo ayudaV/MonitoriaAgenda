@@ -29,11 +29,11 @@ namespace api.Data
         Task<Horario[]> GetHorarioByMonitorAsync(int idMonitor);
         Task<Horario[]> GetHorarioByDayMonitorAsync(int day, int idMonitor);
 
-        // GET para Horario
+        // GET para Agendamento
         Task<Agendamento[]> GetAllAgendamentosAsync();
         Task<Agendamento> GetAgendamentoByKeyAsync(int key);
         Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day);
-        Task<AgendaHorario[]> GetAgendamentoByMonitorAsync(int idMonitor);
+        Task<AgendaAluno[]> GetAlunoAgendamentoByHorarioAsync(int idHorario);
         Task<AgendaHorario[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor);
         Task<AgendaHorario[]> GetAgendamentoByHorarioAsync(int idHorario);
     }

@@ -56,11 +56,11 @@ const Cadastro = () => {
                     <h1>Cadastro</h1>
                     <div className="textbox">
                         <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                        <input type="email"  autofocus="autofocus" value={email} onChange={({ target }) => setUsuario(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                        <input type="email"  autoFocus="autoFocus" value={email} onChange={({ target }) => setUsuario(target.value)} placeholder="E-mail" pattern=".+@g.unicamp.br" />
                     </div>
                     <div className="textbox">
                         <FontAwesomeIcon icon={faUser} className="icon" />
-                        <input type="text" value={apelido} onChange={({ target }) => setApelido(target.value)} name="" placeholder="Apelido" id="" />
+                        <input type="text" value={apelido} onChange={({ target }) => setApelido(target.value)} placeholder="Apelido"/>
                     </div>
                     <div className="textbox">
                         <FontAwesomeIcon icon={faLock} className="icon" />

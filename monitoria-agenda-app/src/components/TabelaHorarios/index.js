@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
 import Horarios from '../Horarios'
 import Agendamento from '../Agendamento';
 
-const TabelaHorarios = ({ horario, dispatch }) => {
+const TabelaHorarios = ({ horario, user, dispatch }) => {
 
     const [dadosMonitores, setMonitores] = useState([]);
     const [idMonitor, setIdMonitor] = useState(1);
@@ -48,7 +49,7 @@ const TabelaHorarios = ({ horario, dispatch }) => {
     const renderTable = () => {
         return (
             <div className="container-tabelaHorarios">
-                <h1 className="title-horarios">Horarios</h1>
+                < h1 className="title-horarios" > Horarios</h1 >
                 <table className="monitor-select">
                     <tbody>
                         <tr>
@@ -83,9 +84,12 @@ const TabelaHorarios = ({ horario, dispatch }) => {
                         </tbody>
                     </table>
                 </div>
-            </div>)
+            </div >
+        )
     }
-
+    if (user.role === "Anonymous") {
+        return (<Redirect to="/"/>)
+    }
     return (
         horario.idHorario !== 0 ? <>
             <Agendamento />
@@ -97,4 +101,4 @@ const TabelaHorarios = ({ horario, dispatch }) => {
 
     )
 }
-export default connect(state => ({ horario: state.horario.horario }))(TabelaHorarios);
+export default connect(state => ({ horario: state.horario.horario, user: state.login.user }))(TabelaHorarios);
