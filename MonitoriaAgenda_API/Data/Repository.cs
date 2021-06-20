@@ -33,6 +33,7 @@ namespace api.Data
         {
             this.context.Update(entity);
         }
+        
         //Aluno
         public async Task<Aluno[]> GetAllAlunosAsync()
         {
@@ -60,6 +61,13 @@ namespace api.Data
             consultaAgendamentos = consultaAgendamentos.Where(a => a.IdAgendamento == key);
             return await consultaAgendamentos.FirstOrDefaultAsync();
         }
+        public async Task<Agendamento> GetAgendamentoByEmailAsync(string email)
+        {
+            IQueryable<Agendamento> consultaAgendamentos = this.context.Agendamento;
+            consultaAgendamentos = consultaAgendamentos.Where(a => a.Email == email);
+            return await consultaAgendamentos.FirstOrDefaultAsync();
+        }
+
         public async Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day) {
             IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
             join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
@@ -98,8 +106,6 @@ namespace api.Data
             return await consultaAgendamentos.ToArrayAsync();
         }
 
-
-
         //Monitor
         public async Task<Monitor[]> GetAllMonitoresAsync()
         {
@@ -128,6 +134,7 @@ namespace api.Data
             select new MonitorAluno() { Monitor = m, Aluno = rs };
             return await consultaMonitores.ToArrayAsync();
         }
+        
         //Horario
         public async Task<Horario[]> GetAllHorariosAsync()
         {
