@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
-import * as HorarioActions from '../../store/actions/horario'
 import * as DateTime from '../../DateTimeController'
 
 const Horarios = ({ email }) => {
-    const dispatch = useDispatch();
 
     const [dadosHorarios, setHorarios] = useState([]);
     const [dadosAgendamentos, setAgendamentos] = useState([]);
@@ -41,22 +39,20 @@ const Horarios = ({ email }) => {
                 }
             )
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-    function handleClick(e, Horario) {
-        e.preventDefault();
-        console.log('Horario Clicado.');
-        dispatch(HorarioActions.setHorario(Horario))
+    const atualizaCampo = (e) => {
+        setDiaSemana(e.target.value);
     }
+
     return (
         <div className="conteiner-agendamentosMonitor">
-            <select>
-                <option>Domingo</option>
-                <option>Segunda</option>
-                <option>Terça</option>
-                <option>Quarta</option>
-                <option>Quinta</option>
-                <option>Sexta</option>
-                <option>Sabado</option>
+            <select required onChange={e => atualizaCampo(e)}>
+                <option value={1}>Domingo</option>
+                <option value={2}>Segunda</option>
+                <option value={3}>Terça</option>
+                <option value={4}>Quarta</option>
+                <option value={5}>Quinta</option>
+                <option value={6}>Sexta</option>
+                <option value={7}>Sabado</option>
             </select>
             <div className="colunaHorarios" >
                 {dadosHorarios.map((Horario) =>
@@ -77,13 +73,13 @@ const Horarios = ({ email }) => {
                                 )
                             }
 
-                            {/*dadosAgendamentos.map((Agendamento) =>
+                            {dadosAgendamentos.map((Agendamento) =>
                                 <div>
                                     {Agendamento.aluno.apelido}
                                     {DateTime.getHoraMinutos(Agendamento.agendamento.horaInicio)} - {DateTime.getHoraMinutos(Agendamento.agendamento.horaFim)}
 
                                 </div>
-                            )*/}
+                            )}
                         </div>
                     </div>
                 )}

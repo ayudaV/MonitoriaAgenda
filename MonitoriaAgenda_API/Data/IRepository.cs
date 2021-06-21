@@ -19,7 +19,7 @@ namespace api.Data
         // GET para Monitor
         Task<Monitor[]> GetAllMonitoresAsync();
         Task<Monitor> GetMonitorByKeyAsync(int key);
-        Task<Monitor> GetMonitorByEmailAsync(string email);
+        Task<MonitorAluno> GetMonitorByEmailAsync(string email);
         Task<MonitorAluno[]> GetMonitoresByNameAsync();
 
         // GET para Horario
@@ -32,7 +32,7 @@ namespace api.Data
         // GET para Agendamento
         Task<Agendamento[]> GetAllAgendamentosAsync();
         Task<Agendamento> GetAgendamentoByKeyAsync(int key);
-        Task<Agendamento> GetAgendamentoByEmailAsync(string email);
+        Task<AgendaHorario[]> GetAgendamentoByEmailAsync(string email);
         Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day);
         Task<AgendaAluno[]> GetAlunoAgendamentoByHorarioAsync(int idHorario);
         Task<AgendaHorario[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor);

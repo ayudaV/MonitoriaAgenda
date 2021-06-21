@@ -61,11 +61,15 @@ namespace api.Data
             consultaAgendamentos = consultaAgendamentos.Where(a => a.IdAgendamento == key);
             return await consultaAgendamentos.FirstOrDefaultAsync();
         }
-        public async Task<Agendamento> GetAgendamentoByEmailAsync(string email)
+        public async Task<AgendaHorario[]> GetAgendamentoByEmailAsync(string email)
         {
-            IQueryable<Agendamento> consultaAgendamentos = this.context.Agendamento;
-            consultaAgendamentos = consultaAgendamentos.Where(a => a.Email == email);
-            return await consultaAgendamentos.FirstOrDefaultAsync();
+            IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
+            join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
+            from rs in loj.DefaultIfEmpty()
+            where
+                a.Email == email
+            select new AgendaHorario() { Agendamento = a, Horario = rs };
+            return await consultaAgendamentos.ToArrayAsync();
         }
 
         public async Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day) {
@@ -119,11 +123,16 @@ namespace api.Data
             consultaMonitores = consultaMonitores.Where(a => a.IdMonitor == key);
             return await consultaMonitores.FirstOrDefaultAsync();
         }
-        public async Task<Monitor> GetMonitorByEmailAsync(string email)
+        public async Task<MonitorAluno> GetMonitorByEmailAsync(string email)
         {
-            IQueryable<Monitor> consultaMonitores = this.context.Monitor;
-            consultaMonitores = consultaMonitores.Where(a => a.Email == email);
-            return await consultaMonitores.FirstOrDefaultAsync();
+            IQueryable<MonitorAluno> consultaMonitores = from m in this.context.Monitor
+            join a in this.context.Aluno on m.Email equals a.Email into loj
+            from rs in loj.DefaultIfEmpty()
+            where
+                m.Email == email
+
+            select new MonitorAluno() { Monitor = m, Aluno = rs };
+            return await consultaMonitores.FirstAsync();
         }
         public async Task<MonitorAluno[]> GetMonitoresByNameAsync()
         {

@@ -13,20 +13,23 @@ const TabelaHorarios = ({ horario, user, dispatch }) => {
     const [horarios, setHorarios] = useState({});
 
     useEffect(() => {
-        const apiUrlMonitor = 'http://localhost:5000/monitor/nome';
+        const fetchData = async () => {
+            const apiUrlMonitor = 'http://localhost:5000/monitor/nome';
 
-        fetch(apiUrlMonitor)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setMonitores(result);
-                    console.log("Função didMount monitor:")
-                    console.log(result);
-                },
-                (error) => {
-                    console.log({ error });
-                }
-            )
+            await fetch(apiUrlMonitor)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        setMonitores(result);
+                        console.log("Função didMount monitor:")
+                        console.log(result);
+                    },
+                    (error) => {
+                        console.log({ error });
+                    }
+                )
+        }
+        fetchData()
     }, [])
 
     const atualizaCampo = (e) => {
@@ -88,7 +91,7 @@ const TabelaHorarios = ({ horario, user, dispatch }) => {
         )
     }
     if (user.role === "Anonymous") {
-        return (<Redirect to="/"/>)
+        return (<Redirect to="/" />)
     }
     return (
         horario.idHorario !== 0 ? <>

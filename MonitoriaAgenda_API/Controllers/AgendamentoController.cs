@@ -53,13 +53,10 @@ namespace api.Controllers
                 var result = await repository.GetAgendamentoByEmailAsync(email);
                 if (result == null)
                     return this.StatusCode(StatusCodes.Status404NotFound);
-
                 return Ok(result);
             }
             catch
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
-            }
+            { return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados."); }
         }
 
         [HttpGet("day/{DiaSemana}")]
