@@ -6,7 +6,8 @@ const LocalStorageCheck = ({ children, setLogin }) => {
     const user = {
         email: localStorage.getItem('email'),
         apelido: localStorage.getItem('apelido'),
-        saldo: localStorage.getItem('saldo'),
+
+        saldoDeMonitoria: Number(localStorage.getItem('saldo')),
         role: localStorage.getItem('role')
     }
 

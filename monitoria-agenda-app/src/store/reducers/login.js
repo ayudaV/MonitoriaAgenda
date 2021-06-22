@@ -15,8 +15,8 @@ export default function login(state = INITIAL_STATE, action) {
         case 'SET_LOGIN': {
             localStorage.setItem('email', action.user.email);
             localStorage.setItem('apelido', action.user.apelido);
-            localStorage.setItem('saldo', action.user.email);
-            localStorage.setItem('role', action.user.email);
+            localStorage.setItem('saldo', action.user.saldoDeMonitoria);
+            localStorage.setItem('role', action.user.role);
 
             return {
             ...state,
