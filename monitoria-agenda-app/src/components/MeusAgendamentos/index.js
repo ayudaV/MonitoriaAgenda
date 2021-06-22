@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import * as DateTime from '../../DateTimeController'
 import DetalhesAgendamento from '../DetalhesAgendamento';
+import { Link, Redirect } from 'react-router-dom';
 
-const Horarios = ({ email }) => {
+const Horarios = ({ user }) => {
 
     const [dadosHorarios, setHorarios] = useState([]);
     const [idMonitor, setIdMonitor] = useState(1);
@@ -14,7 +13,7 @@ const Horarios = ({ email }) => {
 
 
     useEffect(() => {
-        const apiUrlMonitor = 'http://localhost:5000/monitor/email/' + email;
+        const apiUrlMonitor = 'http://localhost:5000/monitor/email/' + user.email;
         fetch(apiUrlMonitor)
             .then(res => res.json())
             .then(
@@ -40,7 +39,9 @@ const Horarios = ({ email }) => {
                 }
             )
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
+    if (user.role === "Anonymous") {
+        return (<Redirect to="/" />)
+    }
     return (
         <div className="container">
             <div className="listagem">
@@ -65,4 +66,4 @@ const Horarios = ({ email }) => {
         </div>
     )
 }
-export default connect(state => ({ email: state.login.user.email }))(Horarios);
+export default connect(state => ({ user: state.login.user }))(Horarios);
