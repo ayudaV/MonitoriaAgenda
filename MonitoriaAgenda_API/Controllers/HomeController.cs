@@ -29,6 +29,7 @@ namespace api.Controllers
             var user = _repository.Aluno
             .Where(u => u.Email == usuario.Email && u.Senha == usuario.Senha)
             .FirstOrDefault();
+
             if (user == null)
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 

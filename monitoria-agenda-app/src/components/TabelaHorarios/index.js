@@ -67,7 +67,7 @@ const TabelaHorarios = ({ horario, user, dispatch }) => {
                                 </select>
                             </td>
                             <td>
-                                <button onClick={e => atualizaHorario(e)}>Carrregar</button>
+                                <button onClick={e => atualizaHorario(e)}>Carregar</button>
                             </td>
                         </tr>
                     </tbody>
