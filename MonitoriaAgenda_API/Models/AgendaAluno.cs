@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 using System;
 namespace api.Models
 {
-    public class AgendaHorario
+    public class AgendaAluno
     {
-        public virtual Horario Horario { get; set; }
         public virtual Agendamento Agendamento { get; set; }
-        public virtual Agendamento Aluno { get; set; }
+        public virtual Aluno Aluno { get; set; }
+
     }
 }

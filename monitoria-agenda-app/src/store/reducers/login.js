@@ -5,7 +5,7 @@ const INITIAL_STATE = {
         apelido: "Any",
         senha: '',
         saldoDeMonitoria: 500,
-        role: "Aluno",
+        role: "Anonymous",
     }
 }
 export default function login(state = INITIAL_STATE, action) {

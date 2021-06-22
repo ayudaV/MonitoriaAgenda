@@ -23,7 +23,6 @@ namespace api.Data
         {
             this.context.Remove(entity);
         }
-
         public async Task<bool> SaveChangesAsync()
         {
             return (await this.context.SaveChangesAsync() > 0);
@@ -33,6 +32,7 @@ namespace api.Data
         {
             this.context.Update(entity);
         }
+        
         //Aluno
         public async Task<Aluno[]> GetAllAlunosAsync()
         {
@@ -60,6 +60,17 @@ namespace api.Data
             consultaAgendamentos = consultaAgendamentos.Where(a => a.IdAgendamento == key);
             return await consultaAgendamentos.FirstOrDefaultAsync();
         }
+        public async Task<AgendaHorario[]> GetAgendamentoByEmailAsync(string email)
+        {
+            IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
+            join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
+            from rs in loj.DefaultIfEmpty()
+            where
+                a.Email == email
+            select new AgendaHorario() { Agendamento = a, Horario = rs };
+            return await consultaAgendamentos.ToArrayAsync();
+        }
+
         public async Task<AgendaHorario[]> GetAgendamentoByDayAsync(int day) {
             IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
             join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
@@ -69,13 +80,13 @@ namespace api.Data
             select new AgendaHorario() { Agendamento = a, Horario = rs };
             return await consultaAgendamentos.ToArrayAsync();
         }
-        public async Task<AgendaHorario[]> GetAgendamentoByMonitorAsync(int idMonitor) {
-            IQueryable<AgendaHorario> consultaAgendamentos = from a in this.context.Agendamento
-            join h in this.context.Horario on a.IdHorario equals h.IdHorario into loj
+        public async Task<AgendaAluno[]> GetAlunoAgendamentoByHorarioAsync(int idHorario) {
+            IQueryable<AgendaAluno> consultaAgendamentos = from a in this.context.Aluno
+            join ag in this.context.Agendamento on a.Email equals ag.Email into loj
             from rs in loj.DefaultIfEmpty()
             where
-                rs.IdMonitor == idMonitor
-            select new AgendaHorario() { Agendamento = a, Horario = rs };
+                rs.IdHorario == idHorario
+            select new AgendaAluno() { Agendamento = rs, Aluno = a };
             return await consultaAgendamentos.ToArrayAsync();
         }
         public async Task<AgendaHorario[]> GetAgendamentoByDayMonitorAsync(int day, int idMonitor) {
@@ -98,8 +109,6 @@ namespace api.Data
             return await consultaAgendamentos.ToArrayAsync();
         }
 
-
-
         //Monitor
         public async Task<Monitor[]> GetAllMonitoresAsync()
         {
@@ -113,11 +122,16 @@ namespace api.Data
             consultaMonitores = consultaMonitores.Where(a => a.IdMonitor == key);
             return await consultaMonitores.FirstOrDefaultAsync();
         }
-        public async Task<Monitor> GetMonitorByEmailAsync(string email)
+        public async Task<MonitorAluno> GetMonitorByEmailAsync(string email)
         {
-            IQueryable<Monitor> consultaMonitores = this.context.Monitor;
-            consultaMonitores = consultaMonitores.Where(a => a.Email == email);
-            return await consultaMonitores.FirstOrDefaultAsync();
+            IQueryable<MonitorAluno> consultaMonitores = from m in this.context.Monitor
+            join a in this.context.Aluno on m.Email equals a.Email into loj
+            from rs in loj.DefaultIfEmpty()
+            where
+                m.Email == email
+
+            select new MonitorAluno() { Monitor = m, Aluno = rs };
+            return await consultaMonitores.FirstAsync();
         }
         public async Task<MonitorAluno[]> GetMonitoresByNameAsync()
         {
@@ -128,6 +142,7 @@ namespace api.Data
             select new MonitorAluno() { Monitor = m, Aluno = rs };
             return await consultaMonitores.ToArrayAsync();
         }
+        
         //Horario
         public async Task<Horario[]> GetAllHorariosAsync()
         {

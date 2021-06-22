@@ -72,11 +72,10 @@ namespace api.Controllers
                 {
                     return BadRequest();
                 }
-                result.Apelido = dadosAlunoAlt.Apelido;
-                result.Senha = dadosAlunoAlt.Senha;
+                result = dadosAlunoAlt;
 
                 await repository.SaveChangesAsync();
-                return Created($"/aluno/descontarSaldo/{dadosAlunoAlt.Email}", dadosAlunoAlt);
+                return Created($"/aluno/{email}", dadosAlunoAlt);
             }
             catch
             {

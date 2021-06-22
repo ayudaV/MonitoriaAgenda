@@ -52,55 +52,56 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
         console.log(horaFim)
         if (preco > saldoDeMonitoria)
             setErro("Você não possui saldo suficiente para realizar o agendamento");
-
-        await fetch(`http://localhost:5000/agendamento`, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(agenForm)
-        })
-            .then(
-                resp => {
-                    console.log(JSON.stringify(agenForm))
-                    if (resp.ok) {
-                        setAgendado(true);
-                        saldoDeMonitoria -= preco;
-                        const descontarSaldo = { email, senha, saldoDeMonitoria }
-
-                        fetch(`http://localhost:5000/aluno/descontarSaldo/` + email, {
-                            method: "PUT",
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(descontarSaldo)
-                        })
-                            .then(
-                                resp => {
-                                    console.log(JSON.stringify(descontarSaldo))
-                                    if (resp.ok) {
-                                        setDescontado(true);
-                                        dispatch(DescontarActions.setSaldo(saldoDeMonitoria))
-                                    }
-                                    else {
-                                        console.log('Problema em descontar o preço ou servidor off-line.');
-                                        setErro(" Problema em descontar o preço ou servidor off-line.");
-                                    }
-                                })
-                            .catch(function (error) {
-                                console.log('There has been a problem with your fetch operation: ' + error.message);
-                            })
-                    }
-                    else {
-                        console.log('E-mail não cadastrado ou servidor off-line.');
-                        setErro(" E-mail não cadastrado ou servidor off-line.");
-                    }
-                })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
+        else {
+            await fetch(`http://localhost:5000/agendamento`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(agenForm)
             })
+                .then(
+                    resp => {
+                        console.log(JSON.stringify(agenForm))
+                        if (resp.ok) {
+                            setAgendado(true);
+                            saldoDeMonitoria -= preco;
+                            const descontarSaldo = { email, senha, saldoDeMonitoria }
+
+                            fetch(`http://localhost:5000/aluno/descontarSaldo/` + email, {
+                                method: "PUT",
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(descontarSaldo)
+                            })
+                                .then(
+                                    resp => {
+                                        console.log(JSON.stringify(descontarSaldo))
+                                        if (resp.ok) {
+                                            setDescontado(true);
+                                            dispatch(DescontarActions.setSaldo(saldoDeMonitoria))
+                                        }
+                                        else {
+                                            console.log('Problema em descontar o preço ou servidor off-line.');
+                                            setErro(" Problema em descontar o preço ou servidor off-line.");
+                                        }
+                                    })
+                                .catch(function (error) {
+                                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                                })
+                        }
+                        else {
+                            console.log('E-mail não cadastrado ou servidor off-line.');
+                            setErro(" E-mail não cadastrado ou servidor off-line.");
+                        }
+                    })
+                .catch(function (error) {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                })
+        }
     }
     return (
         <div className="agen-background">

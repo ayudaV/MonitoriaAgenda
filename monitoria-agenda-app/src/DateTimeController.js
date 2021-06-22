@@ -15,14 +15,14 @@ export const getHeight = (horaInicio, horaFim, limit) => {
 export const getMaxMinutos = (timeIni, timeFim) => {
     console.log('HoraFim: ' + getHora(timeFim) + ', MinutosFim: ' + getMinutos(timeFim)
         + ', HoraIni: ' + getHora(timeIni) + ', MinIni: ' + getMinutos(timeIni))
-    return (getHora(timeFim) * 60 + getMinutos(timeFim) - getHora(timeIni) * 60 + getMinutos(timeIni))
+    return ((getHora(timeFim) * 60 + getMinutos(timeFim)) - (getHora(timeIni) * 60 + getMinutos(timeIni)))
 }
 
 
 export const dateTimeFormat = (minutes) => {
     console.log('minutos: ' + minutes)
     let horas = minutes / 60
-    let minutos = minutes % 60 
+    let minutos = minutes % 60
     horas = Math.trunc(horas).toString();
     minutos = Math.trunc(minutos).toString();
     console.log('1900-01-01T' + horas + ':' + minutos + ':00')
@@ -34,3 +34,17 @@ export const dateTimeFormat = (minutes) => {
 }
 export const getInMinutes = str => (
     Number(getHora(str) * 60) + Number(getMinutos(str)))
+
+export const getDiaSemana = num => {
+    switch (num) {
+        case 1: return "Domingo"
+        case 2: return "Segunda"
+        case 3: return "Terça"
+        case 4: return "Quarta"
+        case 5: return "Quinta"
+        case 6: return "Sexta"
+        case 7: return "Sabado"
+        default: return "Erro"
+
+    }
+}
