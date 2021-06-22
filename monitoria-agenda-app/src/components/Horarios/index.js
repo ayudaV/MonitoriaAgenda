@@ -13,8 +13,6 @@ const Horarios = (props) => {
     const diaSemana = props.diaSemana;
     const idMonitor = props.idMonitor;
 
-
-
     useEffect(() => {
         const apiUrlHorario = 'http://localhost:5000/horario/dayMonitor/' + diaSemana + '/' + idMonitor;
         const apiUrlAgendamento = 'http://localhost:5000/agendamento/dayMonitor/' + diaSemana + '/' + idMonitor;

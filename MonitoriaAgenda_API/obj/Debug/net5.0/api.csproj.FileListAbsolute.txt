@@ -79,7 +79,6 @@ E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Micros
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.OpenApi.dll
-E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Newtonsoft.Json.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -116,3 +115,4 @@ E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\api.dl
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\ref\api.dll
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\api.pdb
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\api.genruntimeconfig.cache
+E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

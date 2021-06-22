@@ -41,7 +41,7 @@ const Login = ({ dispatch }) => {
             .then(
                 resp => {
                     if (resp.ok) {
-                        //console.log(resp.json());
+                        // console.log(resp.json());
                         resp.json().then((data) => {
                             console.log('data.user.email: ' + data.user.email);
                             setUser(data);

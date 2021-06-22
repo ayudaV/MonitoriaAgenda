@@ -13,7 +13,7 @@ export default class Rotas extends Component {
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route path="/cadastro" component={Cadastro} />
-                    <Route path="/horarios" component={TabelaHorarios} />
+                    <Route path='/horarios' component={TabelaHorarios}/>
                     <Redirect from='*' to='/' />
                 </Switch>
             </Provider>

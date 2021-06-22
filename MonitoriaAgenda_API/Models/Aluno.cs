@@ -10,5 +10,10 @@ namespace api.Models
         public string Apelido { get; set; }
         public int SaldoDeMonitoria { get; set; }
         public string Role {get; set;}
+
+        public override string ToString()
+        {
+            return Email;
+        }
     }
 }
