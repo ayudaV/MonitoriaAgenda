@@ -13,7 +13,7 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
     const [apelido, setApelido] = useState("");
     const [senha, setPassword] = useState("");
     const [erro, setErro] = useState('');
-
+    const [sucesso, setSucesso] = useState(false);
     function mostrarSenha() {
         var x = document.getElementById("senha");
 
@@ -26,6 +26,11 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        setSucesso(false)
+
+        if (apelido.length < 1) return setErro(" Coloque um apelido válido!")
+
+        if (senha.length <= 3) return setErro(" Coloque uma senha com mais de 3 dígitos")
 
         const userForm = { email, senha, apelido, saldoDeMonitoria, role };
 
@@ -45,6 +50,7 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
                             console.log('data.user.email: ' + data.email);
                             dispatch(LoginActions.setLogin(data))
                             setErro(null)
+                            setSucesso(true)
                         })
                     }
                     else {
@@ -57,7 +63,7 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
             })
     }
     if (role === "Anonymous") {
-        return (<Redirect to="/"/>)
+        return (<Redirect to="/" />)
     }
     return (
         <div className="container">
@@ -79,19 +85,23 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
                         <span className="checkmark"></span>
                     </div>
                     <input className="botao" type="submit" value="Salvar" />
-                    {erro ?
-                        <>
-                            <h4 className="msgErro">
-                                < FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                                {erro}
-                            </h4>
-                        </> :
-                        <>
-                            <h4 className="successful">
-                                < FontAwesomeIcon icon={faSmileBeam} className="icon" />
-                                Cadastro realizado com sucesso!
-                            </h4>
-                        </>
+                    {
+                        sucesso ?
+                            <>
+                                <h4 className="successful">
+                                    < FontAwesomeIcon icon={faSmileBeam} className="icon" />
+                                    Alterações realizadas com sucesso!
+                                </h4>
+                            </> : <>
+                                {erro ?
+                                    <>
+                                        <h4 className="msgErro">
+                                            < FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                            {erro}
+                                        </h4>
+                                    </> : <></>
+                                }
+                            </>
                     }
                 </form>
             </div>

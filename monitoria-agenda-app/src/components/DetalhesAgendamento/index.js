@@ -8,18 +8,21 @@ const DetalhesAgendamento = (props) => {
     const diaDaSemana = props.horario.diaDaSemana;
 
     useEffect(() => {
-        const apiUrlAgendamento = 'http://localhost:5000/agendamento/monitor/' + idHorario;
-        console.log("link:" + apiUrlAgendamento)
+        async function fetchData() {
+            const apiUrlAgendamento = 'http://localhost:5000/agendamento/monitor/' + idHorario;
+            console.log("link:" + apiUrlAgendamento)
 
-        fetch(apiUrlAgendamento)
-            .then(res => res.json())
-            .then((result) => {
-                setAgendamentos(result);
-            },
-                (error) => {
-                    console.log({ error });
-                }
-            )
+            await fetch(apiUrlAgendamento)
+                .then(res => res.json())
+                .then((result) => {
+                    setAgendamentos(result);
+                },
+                    (error) => {
+                        console.log({ error });
+                    }
+                )
+        }
+        fetchData();
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
