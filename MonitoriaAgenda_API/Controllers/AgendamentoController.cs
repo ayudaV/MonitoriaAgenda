@@ -170,5 +170,29 @@ namespace api.Controllers
             // retorna BadRequest se não conseguiu deletar
             //return BadRequest();
         }
+        [HttpDelete("resetAgendamentos")]
+        public async Task<ActionResult> deleteAll()
+        {
+            try
+            {
+                //verifica se existe aluno a ser excluído
+                var agendamentos = await repository.GetAllAgendamentosAsync();
+                if (agendamentos == null)
+                {
+                    //método do EF
+                    return NotFound();
+                }
+                foreach (Agendamento agendamento in agendamentos)
+                {
+                    repository.Delete(agendamento);
+                }
+                await repository.SaveChangesAsync();
+                return NoContent();
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
+            }
+        }
     }
 }

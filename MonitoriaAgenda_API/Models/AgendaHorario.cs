@@ -6,5 +6,6 @@ namespace api.Models
     {
         public virtual Horario Horario { get; set; }
         public virtual Agendamento Agendamento { get; set; }
+        public virtual Agendamento Aluno { get; set; }
     }
 }

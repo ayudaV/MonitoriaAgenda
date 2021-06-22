@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
-
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import * as DateTime from '../../DateTimeController'
+import DetalhesAgendamento from '../DetalhesAgendamento';
 
 const Horarios = ({ email }) => {
 
     const [dadosHorarios, setHorarios] = useState([]);
-    const [dadosAgendamentos, setAgendamentos] = useState([]);
-    const [diaSemana, setDiaSemana] = useState(2);
     const [idMonitor, setIdMonitor] = useState(1);
 
 
 
     useEffect(() => {
-        const apiUrlMonitor = 'http://localhost:5000/monitor/' + email;
+        const apiUrlMonitor = 'http://localhost:5000/monitor/email/' + email;
         fetch(apiUrlMonitor)
             .then(res => res.json())
             .then(
@@ -24,7 +25,7 @@ const Horarios = ({ email }) => {
                     console.log({ error });
                 }
             )
-        const apiUrlHorario = 'http://localhost:5000/horario/dayMonitor/' + diaSemana + '/' + idMonitor;
+        const apiUrlHorario = 'http://localhost:5000/horario/monitor/' + idMonitor;
 
         console.log("link:" + apiUrlHorario)
 
@@ -39,53 +40,29 @@ const Horarios = ({ email }) => {
                 }
             )
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-    const atualizaCampo = (e) => {
-        setDiaSemana(e.target.value);
-    }
 
     return (
-        <div className="conteiner-agendamentosMonitor">
-            <select required onChange={e => atualizaCampo(e)}>
-                <option value={1}>Domingo</option>
-                <option value={2}>Segunda</option>
-                <option value={3}>Terça</option>
-                <option value={4}>Quarta</option>
-                <option value={5}>Quinta</option>
-                <option value={6}>Sexta</option>
-                <option value={7}>Sabado</option>
-            </select>
-            <div className="colunaHorarios" >
-                {dadosHorarios.map((Horario) =>
-                    <div key={Horario.idHorario}
-                        className="divHorario"
-                        id={"ID:" + Horario.idHorario}>
-                        {DateTime.getHoraMinutos(Horario.horaInicio)} - {DateTime.getHoraMinutos(Horario.horaFim)}
-                        <div>
-                            {fetch('http://localhost:5000/agendamento/horario/' + Horario.idHorario)
-                                .then(res => res.json())
-                                .then(
-                                    (result) => {
-                                        setAgendamentos(result)
-                                    },
-                                    (error) => {
-                                        console.log({ error });
-                                    }
-                                )
-                            }
-
-                            {dadosAgendamentos.map((Agendamento) =>
-                                <div>
-                                    {Agendamento.aluno.apelido}
-                                    {DateTime.getHoraMinutos(Agendamento.agendamento.horaInicio)} - {DateTime.getHoraMinutos(Agendamento.agendamento.horaFim)}
-
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
+        <div className="container">
+            <div className="listagem">
+                <Link to="/horarios"><FontAwesomeIcon icon={faArrowAltCircleLeft} className="icon" />Voltar</Link>
+                <h1 className="tituloListagem">Meus Agendamentos</h1>
+                <table className="listaAgendamentos">
+                    <thead>
+                        <tr className="cabecTabela">
+                            <th className="tabDiaDaSemana">Dia da Semana</th>
+                            <th className="tabNomeAluno">Aluno</th>
+                            <th className="tabTituloHoraIni">Horario Inicio</th>
+                            <th className="tabTituloHoraFim">Horario Final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {dadosHorarios.map((Horario) =>
+                            <DetalhesAgendamento key={Horario.idHorario} horario={Horario} />
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
-
     )
 }
 export default connect(state => ({ email: state.login.user.email }))(Horarios);

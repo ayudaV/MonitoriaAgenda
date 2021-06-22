@@ -43,7 +43,7 @@ namespace api.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
             }
         }
-        
+
         [HttpGet("{IdMonitor}")]
         public async Task<IActionResult> Get(int idMonitor)
         {
@@ -77,6 +77,24 @@ namespace api.Controllers
             }
         }
 
+        [HttpGet("nomeID/{IdMonitor}")]
+        public async Task<IActionResult> GetNomeById(int idMonitor)
+        {
+            try
+            {
+                Monitor result = await repository.GetMonitorByKeyAsync(idMonitor);
+                if (result == null)
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+
+                Aluno aluno = await repository.GetAlunoByKeyAsync(result.Email);
+
+                return Ok(aluno);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
+            }
+        }
         [HttpPost]
         public async Task<ActionResult> post(Monitor model)
         {

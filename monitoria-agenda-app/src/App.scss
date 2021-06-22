@@ -269,9 +269,33 @@ li a {
   border-radius: 3px;
 }
 .listagem {
+  background-color: #363636;
+  margin: auto;
+  border-radius: 10px;
   color: whitesmoke;
-  width: 80%;
-  background-color: #333333;
+  margin-top: 10%;
+  padding: 20px;
+  z-index: 2;
+  -webkit-animation: mover 0.5s alternate; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: mover 0.5s alternate; /* Firefox < 16 */
+  animation: mover 0.5s alternate;
+  text-align: center;
+}
+.listaAgendamentos {
+  border: 1.5px solid;
+
+  border-radius: 4px;
+  border-collapse: collapse;
+  & td {
+    border: 1.5px solid;
+    border-radius: 4px;
+
+  }
+  & th {
+  border: 1.5px solid;
+  border-radius: 4px;
+
+  }
 }
 @-webkit-keyframes mover {
   0% {

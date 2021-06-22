@@ -23,7 +23,6 @@ namespace api.Data
         {
             this.context.Remove(entity);
         }
-
         public async Task<bool> SaveChangesAsync()
         {
             return (await this.context.SaveChangesAsync() > 0);
