@@ -20,7 +20,6 @@ C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bi
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -116,3 +115,4 @@ E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\ref\ap
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\api.pdb
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\obj\Debug\net5.0\api.genruntimeconfig.cache
 E:\Projects\Websites\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\terad\OneDrive\Documentos\GitHub\MonitoriaAgenda\MonitoriaAgenda_API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
