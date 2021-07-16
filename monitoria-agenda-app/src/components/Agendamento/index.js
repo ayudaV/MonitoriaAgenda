@@ -49,7 +49,6 @@ const Agendamento = ({ email, senha, saldoDeMonitoria, horario, dispatch }) => {
 
         const agenForm = { email, horaInicio, horaFim, preco, idHorario };
 
-        console.log(horaFim)
         if (preco > saldoDeMonitoria)
             setErro("Você não possui saldo suficiente para realizar o agendamento");
         else {

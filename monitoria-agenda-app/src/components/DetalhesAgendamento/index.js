@@ -28,7 +28,7 @@ const DetalhesAgendamento = (props) => {
     return (
         <>
             {dadosAgendamentos.map((data) =>
-                <tr key={data.idHorario}>
+                <tr key={data.agendamento.idAgendamento}>
                     <td>{DateTime.getDiaSemana(diaDaSemana)}</td>
                     <td>{data.aluno.apelido}</td>
                     <td>{DateTime.getHoraMinutos(data.agendamento.horaInicio)}</td>

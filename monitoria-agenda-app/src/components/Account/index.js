@@ -87,19 +87,15 @@ const Account = ({ email, saldoDeMonitoria, role, dispatch }) => {
                     <input className="botao" type="submit" value="Salvar" />
                     {
                         sucesso ?
-                            <>
-                                <h4 className="successful">
-                                    < FontAwesomeIcon icon={faSmileBeam} className="icon" />
-                                    Alterações realizadas com sucesso!
-                                </h4>
-                            </> : <>
+                            <h4 className="successful">
+                                < FontAwesomeIcon icon={faSmileBeam} className="icon" />
+                                Alterações realizadas com sucesso!
+                            </h4> : <>
                                 {erro ?
-                                    <>
-                                        <h4 className="msgErro">
-                                            < FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
-                                            {erro}
-                                        </h4>
-                                    </> : <></>
+                                    <h4 className="msgErro">
+                                        < FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
+                                        {erro}
+                                    </h4> : <></>
                                 }
                             </>
                     }
